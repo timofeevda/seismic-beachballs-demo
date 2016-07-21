@@ -1,0 +1,7 @@
+{
+    "globalDependencies": {
+        "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
+        "lodash": "registry:dt/lodash#3.10.0+20160720001309",
+        "node": "registry:dt/node#6.0.0+20160720070758"
+    }
+}

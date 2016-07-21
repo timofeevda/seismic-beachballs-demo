@@ -1,0 +1,48 @@
+<segment [header]="'P / T / B axes'">
+    <div class="ui form">
+        <div class="ui three column grid">
+            <div class="row">
+                <div class="column">
+                    <checkbox [label]="'P axis'" [checked]="momentTensor.momentTensorView.pAxis" (onChecked)="togglePAxis($event)"></checkbox>
+                    <div class="paxis"></div>
+                </div>
+                <div class="column">
+                    <checkbox [label]="'T axis'" [checked]="momentTensor.momentTensorView.tAxis" (onChecked)="toggleTAxis($event)"></checkbox>
+                    <div class="taxis"></div>
+                </div>
+                <div class="column">
+                    <checkbox [label]="'B axis'" [checked]="momentTensor.momentTensorView.bAxis" (onChecked)="toggleBAxis($event)"></checkbox>
+                    <div class="baxis"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</segment>
+<div class="ui hidden divider"></div>
+<segment [header]="'Nodal planes'">
+    <div class="ui two column grid">
+        <div class="row">
+            <div class="column">
+                <checkbox [label]="'Fault plane'" [checked]="momentTensor.momentTensorView.faultPlane" (onChecked)="toggleFaultPlane($event)"></checkbox>
+                <div class="faultplane"></div>
+            </div>
+            <div class="column">
+                <checkbox [label]="'Aux. plane'" [checked]="momentTensor.momentTensorView.auxPlane" (onChecked)="toggleAuxPlane($event)"></checkbox>
+                <div class="auxplane"></div>
+            </div>
+        </div>
+    </div>
+</segment>
+<div class="ui hidden divider"></div>
+<segment [header]="'Hemispheres'">
+    <div class="ui two column grid">
+        <div class="row">
+            <div class="column">
+                <radio #fullsphere [label]="'Full Sphere'" [checked]="!momentTensor.momentTensorView.lowerHemisphere" (onChecked)="toggleLowerHemisphere()"></radio>
+            </div>
+            <div class="column">
+                <radio #lowerhemisphere [label]="'Lower Hemisphere'" [checked]="momentTensor.momentTensorView.lowerHemisphere" (onChecked)="toggleLowerHemisphere()"></radio>
+            </div>
+        </div>
+    </div>
+</segment>

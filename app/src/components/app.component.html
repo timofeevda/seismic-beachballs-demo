@@ -1,0 +1,84 @@
+<div class="ui padded grid">
+    <div class="five wide column" style="overflow:auto, max-height:500px">
+        <div class="ui centered grid">
+            <div class="center aligned column">
+                <div class="ui compact menu">
+                    <a class="active item">
+                        <i class="alternate github icon"></i> View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="ui hidden divider"></div>
+        <segment [header]="'Cartesian coordinates'" [collapsable]='false' [withhelp]='true' [helpid]="'cartesian-help'">
+            <tensor [isCartesian]="true"></tensor>
+        </segment>
+        <div class="ui hidden divider"></div>
+        <segment [header]="'Strike / Dip / Rake'" [collapsable]='false' [withhelp]='true' [helpid]="'sdr-help'">
+            <sdr></sdr>
+        </segment>
+        <div class="ui hidden divider"></div>
+        <segment [header]="'Spherical coordinates'" [collapsed]='true' [withhelp]='true' [helpid]="'spherical-help'">
+            <tensor [isCartesian]="flase"></tensor>
+        </segment>
+        <div class="ui hidden divider"></div>
+        <tensorview></tensorview>
+    </div>
+    <div class="eleven wide column">
+        <div class="row">
+            <segment [header]="'Full Moment Tensor'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'beachball-help'">
+                <fulltensorscene></fulltensorscene>
+            </segment>
+        </div>
+        <div class="ui hidden divider"></div>
+        <div class="row">
+            <div class="ui grid">
+                <div class="four wide column">
+                    <segment [header]="'Equal Area Net Projection'" [collapsable]='false' [fit]='true'>
+                        <projectedtensorscene [height]='122' [projection]="'equalarea'"></projectedtensorscene>
+                    </segment>
+                </div>
+                <div class="four wide column">
+                    <segment [header]="'Wulff Net Projection'" [collapsable]='false' [fit]='true'>
+                        <projectedtensorscene [height]='122' [projection]="'wulff'"></projectedtensorscene>
+                    </segment>
+                </div>
+                <div class="four wide column">
+                    <segment [header]="'Orthographic Projection'" [collapsable]='false' fit='true'>
+                        <projectedtensorscene [height]='122' [projection]="'orthographic'"></projectedtensorscene>
+                    </segment>
+                </div>
+                <div class="four wide column">
+                    <segment [header]="'Double Couple'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'double-couple-help'">
+                        <doublecouplescene [height]='122'></doublecouplescene>
+                    </segment>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<helpopup [id]="'spherical-help'" [header]="'Spherical moment tensor entries in spherical coordinates'">
+    Moment tensor entries represented in spherical coordinates. Six distinct moment tensor entries are used to form 3 x 3 symmetric
+    tensor in spherical coordinates. These values are kept in sync with Strike / Dip / Rake
+</helpopup>
+
+<helpopup [id]="'cartesian-help'" [header]="'Cartesian moment tensor entries'">
+    Moment tensor entries represented in cartesian coordinates. Six distinct moment tensor entries are used to form 3 x 3 symmetric
+    tensor. These values are kept in sync with Strike / Dip / Rake
+</helpopup>
+
+<helpopup [id]="'sdr-help'" [header]="'Strike / Dip / Rake (Slip)'">
+    Strike, dip, and rake are used to describe earthquake Focal Mechanisms. These values are used to compute symmetric moment
+    tensor and show Double Couple view.
+</helpopup>
+
+<helpopup [id]="'double-couple-help'" [header]="'Double Couple'">
+    Double Couple view created by using JavaScript version of patch_meca.m file in Mirone source code (
+    <a href="http://w3.ualg.pt/~jluis/mirone/" target="_blank">http://w3.ualg.pt/~jluis/mirone/</a>) - a MATLAB-based framework
+</helpopup>
+
+<helpopup [id]="'beachball-help'" [header]="'Full 3D moment tensor'">
+    The code used for full 3D moment tensor is based on Carl Tape's work. See
+    <a href="http://www.giseis.alaska.edu/input/carl/" target="_blank">http://www.giseis.alaska.edu/input/carl/</a> for papers and reference to Mathematica scripts.
+</helpopup>

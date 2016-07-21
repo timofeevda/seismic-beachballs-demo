@@ -1,0 +1,13 @@
+<div class="ui spinner input mini">
+    <input type="number" [ngModel]="value" (ngModelChange)="onChange($event)" />
+    <div class="ui vertical buttons">
+        <button type="button" class="ui spinner up button" (click)="stepUp()" (mousedown)="startSpinUp()" (mouseup)="stopSpin()"
+            (mouseout)="stopSpin()">
+            <i class="chevron up icon"></i>
+        </button>
+        <button type="button" class="ui spinner down button" (click)="stepDown()" (mousedown)="startSpinDown()" (mouseup)="stopSpin()"
+            (mouseout)="stopSpin()">
+            <i class="chevron down icon"></i>
+        </button>
+    </div>
+</div>

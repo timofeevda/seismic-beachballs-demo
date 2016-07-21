@@ -1,0 +1,79 @@
+.ui.segment.collapsed {padding: 1em 1em 1em}
+.ui.segment.expanded {padding: 3em 1em 1em}
+.ui.segment.slim {padding: 2.5em 0.5em 0.5em}
+
+.ui.spinner.input input {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+.ui.spinner.input .button.disabled {
+    cursor: not-allowed;
+}
+.ui.spinner.input .buttons .button {
+    background-color: #fff;
+    border: 1px solid rgba(34, 36, 38, 0.15);
+    border-left: none;
+    padding: .1em .1em .1em;
+    height: 10px;
+}
+.ui.spinner.input .spinner.up.button {
+    border-bottom: none;
+    border-top-left-radius: 0;
+}
+.ui.spinner.input .spinner.down.button {
+    border-bottom-left-radius: 0;
+}
+.ui.spinner.input .button .icon {
+    margin-top: -2px;
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: 0;
+}
+
+.ui.form .column.tensor {
+    padding-right: 2rem;
+}
+
+.paxis {
+    background-color: blue;
+    width: 17px;
+    height: 17px;
+    float:right;
+}
+
+.taxis {
+    background-color: greenyellow;
+    width: 17px;
+    height: 17px;
+    float:right;
+}
+
+.baxis {
+    background-color: red;
+    width: 17px;
+    height: 17px;
+    float:right;
+}
+
+.faultplane {
+    background-color: #fcbe13;
+    width: 17px;
+    height: 17px;
+    float:right;
+}
+
+.auxplane {
+    background-color: #13b2fc;
+    width: 17px;
+    height: 17px;
+    float:right;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}

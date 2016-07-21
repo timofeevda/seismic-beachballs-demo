@@ -1,0 +1,9 @@
+<div class="ui segment" [class.collapsed]="collapsed" [class.expanded]="!collapsed" [class.fit]="fit">
+    <ng-content *ngIf="!collapsed"></ng-content>
+    <div class="ui top attached label">
+        {{header}}
+        <i *ngIf="collapsable" class="link icon chevron circle" style="float:right" (click)="collapse()" [class.up]="!collapsed"
+            [class.down]="collapsed"></i>
+        <i *ngIf="withhelp" class="link icon help circle" style="float:right" (click)="showHelp()"></i>
+    </div>
+</div>
