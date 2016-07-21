@@ -13,15 +13,15 @@ export class SegmentComponent {
     @Input() header: string
     @Input() fit: boolean
     @Input() collapsable: boolean = true
-    
+
     constructor() {}
 
     collapse() {
-        this.collapsed = !this.collapsed        
+        this.collapsed = !this.collapsed
     }
 
     showHelp() {
         $('#' + this.helpid).modal('show')
     }
-    
+
 }

@@ -1,8 +1,13 @@
+var webpack = require('webpack')
+
 module.exports = {
-    entry: './app/src/boot.ts',
+    entry: {
+      app : './app/src/boot.ts',
+      vendors : './app/src/vendors.ts'
+    },
     output: {
         path: './dist',
-        filename: 'bundle.js'
+        filename: '[name].js'
     },
     node: {
         fs: "empty"
