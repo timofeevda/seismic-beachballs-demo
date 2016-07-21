@@ -5,7 +5,7 @@ import {MomentTensorService} from '../../services/momenttensor.service'
 import {SpinnerComponent} from '../spinner/spinner.component'
 
 @Component({
-    templateUrl: 'app/src/components/tensor/sdr.component.html',
+    template: require('./sdr.component.html'),
     selector: 'sdr',
     directives: [SpinnerComponent]
 })

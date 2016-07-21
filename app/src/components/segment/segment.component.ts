@@ -3,7 +3,7 @@ import {Component, Input, Output} from '@angular/core'
 declare var $: any
 
 @Component({
-    templateUrl: 'app/src/components/segment/segment.component.html',
+    template: require('./segment.component.html'),
     selector: 'segment'
 })
 export class SegmentComponent {

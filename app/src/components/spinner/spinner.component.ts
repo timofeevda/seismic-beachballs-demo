@@ -1,15 +1,15 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
 
 @Component({
-    templateUrl: 'app/src/components/spinner/spinner.component.html',
+    template: require('./spinner.component.html'),
     selector: 'spinner'
 })
 export class SpinnerComponent {
     @Input() value: number
-    @Output() valueChange: EventEmitter<number>    
+    @Output() valueChange: EventEmitter<number>
     @Input() step: number = 0.1
     timeout: number
-    
+
     constructor() {
         this.valueChange = new EventEmitter<any>()
     }
@@ -23,7 +23,7 @@ export class SpinnerComponent {
         this.timeout = window.setTimeout(() => {
             this.stepUp()
             this.startSpinUp()
-        }, 100);      
+        }, 100);
     }
 
     stopSpin() {
@@ -31,7 +31,7 @@ export class SpinnerComponent {
     }
 
     startSpinDown() {
-        this.timeout = window.setTimeout(() => { 
+        this.timeout = window.setTimeout(() => {
             this.stepDown()
             this.startSpinDown()
         }, 100);

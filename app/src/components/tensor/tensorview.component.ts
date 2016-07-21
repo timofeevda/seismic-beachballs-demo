@@ -7,7 +7,7 @@ import {RadioComponent} from '../radio/radio.component'
 import {SegmentComponent} from '../segment/segment.component'
 
 @Component({
-    templateUrl: 'app/src/components/tensor/tensorview.component.html',
+    template: require('./tensorview.component.html'),
     selector: 'tensorview',
     directives: [CheckboxComponent, RadioComponent, SegmentComponent]
 })

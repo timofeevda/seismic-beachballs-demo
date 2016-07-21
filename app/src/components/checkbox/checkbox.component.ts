@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
 
 @Component({
-    templateUrl: 'app/src/components/checkbox/checkbox.component.html',
+    template: require('./checkbox.component.html'),
     selector: 'checkbox'
 })
 export class CheckboxComponent {
