@@ -10,8 +10,8 @@ export class MomentTensorService {
     currentTensor: MomentTensor
 
     constructor() {
-        let cartesianTensor = { Mxx: -0.1977, Mxy: 0.1431, Mxz: -0.9390, Myy: 0.2505, Myz: -0.6885, Mzz: -0.1073 }
-        let momentTensorView: MomentTensorView = {pAxis: true, tAxis: true, bAxis: true, faultPlane: true, auxPlane: true, lowerHemisphere: true}
+        let cartesianTensor = { Mxx: 99, Mxy: 0, Mxz: 0, Myy: 1, Myz: 0, Mzz: -10 }
+        let momentTensorView: MomentTensorView = {pAxis: true, tAxis: true, bAxis: true, faultPlane: true, auxPlane: true, lowerHemisphere: false}
         this.currentTensor = new MomentTensor(momentTensorView, cartesianTensor, undefined)
         this.momentTensorSubject = new BehaviorSubject<MomentTensor>(this.currentTensor)
     }
@@ -82,9 +82,9 @@ export class MomentTensorService {
         this.currentTensor = new MomentTensor(this.currentTensor.momentTensorView,undefined, spherical)
 
         // keep original s/d/r, cause after computation they can be slightly different
-        this.currentTensor.strike = strike
-        this.currentTensor.dip = dip
-        this.currentTensor.slip = slip
+        // this.currentTensor.strike = strike
+        // this.currentTensor.dip = dip
+        // this.currentTensor.slip = slip
 
         this.momentTensorSubject.next(this.currentTensor)
     }

@@ -18,7 +18,7 @@
             <sdr></sdr>
         </segment>
         <div class="ui hidden divider"></div>
-        <segment [header]="'Spherical coordinates'" [collapsed]='true' [withhelp]='true' [helpid]="'spherical-help'">
+        <segment [header]="'Mij entries in r-t-p (up-south-east) basis'" [collapsed]='true' [withhelp]='true' [helpid]="'spherical-help'">
             <tensor [isCartesian]="flase"></tensor>
         </segment>
         <div class="ui hidden divider"></div>
@@ -26,7 +26,7 @@
     </div>
     <div class="eleven wide column">
         <div class="row">
-            <segment [header]="'Full Moment Tensor'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'beachball-help'">
+            <segment [header]="'Moment Tensor'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'beachball-help'">
                 <fulltensorscene></fulltensorscene>
             </segment>
         </div>
@@ -49,7 +49,7 @@
                     </segment>
                 </div>
                 <div class="four wide column">
-                    <segment [header]="'Double Couple'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'double-couple-help'">
+                    <segment [header]="'Closest Double Couple'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'double-couple-help'">
                         <doublecouplescene [height]='122'></doublecouplescene>
                     </segment>
                 </div>
@@ -73,12 +73,12 @@
     tensor and show Double Couple view.
 </helpopup>
 
-<helpopup [id]="'double-couple-help'" [header]="'Double Couple'">
-    Double Couple view created by using JavaScript version of patch_meca.m file in Mirone source code (
+<helpopup [id]="'double-couple-help'" [header]="'Closest Double Couple'">
+    Closest Double Couple view created by using JavaScript version of patch_meca.m file in Mirone source code (
     <a href="http://w3.ualg.pt/~jluis/mirone/" target="_blank">http://w3.ualg.pt/~jluis/mirone/</a>) - a MATLAB-based framework
 </helpopup>
 
-<helpopup [id]="'beachball-help'" [header]="'Full 3D moment tensor'">
-    The code used for full 3D moment tensor is based on Carl Tape's work. See
+<helpopup [id]="'beachball-help'" [header]="'3D moment tensor'">
+    The code used for 3D moment tensor is based on Carl Tape's work. See
     <a href="http://www.giseis.alaska.edu/input/carl/" target="_blank">http://www.giseis.alaska.edu/input/carl/</a> for papers and reference to Mathematica scripts.
 </helpopup>
