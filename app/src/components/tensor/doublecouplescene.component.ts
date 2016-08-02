@@ -3,7 +3,7 @@ import {Component, ElementRef, ViewChild, Input} from '@angular/core'
 import * as beachballs from 'seismic-beachballs'
 
 import {MomentTensor} from '../../model/momenttensor.model'
-import {MomentTensorService} from '../../services/momenttensor.service'
+import {MomentTensorService, PolygonizedMomentTensor} from '../../services/momenttensor.service'
 
 @Component({
     template: `
@@ -16,11 +16,11 @@ export class DoubleCoupleSceneComponent {
     @ViewChild('container') container: ElementRef
     @ViewChild('canvas') canvas: ElementRef
     @Input() height: string
-    momentTensor: MomentTensor
+    polygonizedMomentTensor: PolygonizedMomentTensor
 
     constructor(private momentTensorService: MomentTensorService) {
-        this.momentTensorService.momentTensorSubject.subscribe(mt => {
-            this.momentTensor = mt
+        this.momentTensorService.polygonizedMomentTensorSubject.subscribe(pmt => {
+            this.polygonizedMomentTensor = pmt
             if (this.canvas) {
                 this.drawTensor()
             }
@@ -31,7 +31,7 @@ export class DoubleCoupleSceneComponent {
         var graphicContext = this.canvas.nativeElement.getContext('2d');
         graphicContext.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
 
-        if (this.momentTensor.sdrComputationError) {
+        if (this.polygonizedMomentTensor.momentTensor.sdrComputationError) {
             return;
         }
 
@@ -42,7 +42,7 @@ export class DoubleCoupleSceneComponent {
         const width = this.canvas.nativeElement.width / 2
         const height = this.canvas.nativeElement.height / 2
 
-        let {strike, dip, rake} = beachballs.mt2sdr(this.momentTensor)
+        let {strike, dip, rake} = beachballs.mt2sdr(this.polygonizedMomentTensor.momentTensor)
 
         let {comp, dilat} = beachballs.doublecouple(strike, dip, rake)
 

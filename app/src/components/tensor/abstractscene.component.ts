@@ -1,7 +1,7 @@
 import {ElementRef, ViewChild} from '@angular/core'
 
 import {MomentTensor} from '../../model/momenttensor.model'
-import {MomentTensorService} from '../../services/momenttensor.service'
+import {MomentTensorService, PolygonizedMomentTensor} from '../../services/momenttensor.service'
 
 import * as _ from 'lodash'
 
@@ -9,15 +9,15 @@ let three = require("three");
 
 export abstract class AbstractSceneComponent {
     @ViewChild('container') container: ElementRef
-    momentTensor: MomentTensor
+    polygonizedMomentTensor: PolygonizedMomentTensor
     camera: any
     scene: any
     renderer: any
     sceneContainer: any
 
     constructor(protected momentTensorService: MomentTensorService) {
-        this.momentTensorService.momentTensorSubject.subscribe(mt => {
-            this.momentTensor = mt
+        this.momentTensorService.polygonizedMomentTensorSubject.subscribe(pmt => {
+            this.polygonizedMomentTensor = pmt
             if (this.scene) {
                 this.updateTensorView()
             }
@@ -55,7 +55,7 @@ export abstract class AbstractSceneComponent {
 
     updateTensorView() {
         this.scene.remove(this.sceneContainer)
-        if (!this.momentTensor.sdrComputationError) {
+        if (!this.polygonizedMomentTensor.momentTensor.sdrComputationError) {
             this.sceneContainer = this.buildSceneContainer()
             this.scene.add(this.sceneContainer)
         }

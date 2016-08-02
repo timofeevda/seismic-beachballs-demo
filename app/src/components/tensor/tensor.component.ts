@@ -14,7 +14,7 @@ export class TensorComponent {
     momentTensor: MomentTensor
 
     constructor(private momentTensorService: MomentTensorService) {
-        this.momentTensorService.momentTensorSubject.subscribe(mt => this.momentTensor = mt)
+        this.momentTensorService.polygonizedMomentTensorSubject.subscribe(mt => this.momentTensor = mt.momentTensor)
     }
 
     updateMxy(val: number) {

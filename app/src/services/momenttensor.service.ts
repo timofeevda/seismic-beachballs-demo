@@ -4,16 +4,24 @@ import * as beachballs from "seismic-beachballs"
 
 import {MomentTensor, MomentTensorView} from '../model/momenttensor.model'
 
+export class PolygonizedMomentTensor {
+    constructor(public momentTensor: MomentTensor, public polygons: { vertices: number[][], compressional: boolean }[]){}
+}
+
 @Injectable()
 export class MomentTensorService {
-    momentTensorSubject: Subject<MomentTensor>
+    polygonizedMomentTensorSubject: Subject<PolygonizedMomentTensor>
     currentTensor: MomentTensor
 
     constructor() {
         let cartesianTensor = { Mxx: 99, Mxy: 0, Mxz: 0, Myy: 1, Myz: 0, Mzz: -10 }
         let momentTensorView: MomentTensorView = {pAxis: true, tAxis: true, bAxis: true, faultPlane: true, auxPlane: true, lowerHemisphere: false}
         this.currentTensor = new MomentTensor(momentTensorView, cartesianTensor, undefined)
-        this.momentTensorSubject = new BehaviorSubject<MomentTensor>(this.currentTensor)
+        this.polygonizedMomentTensorSubject = new BehaviorSubject<PolygonizedMomentTensor>(this.createPolygonizedMomentTensor())
+    }
+
+    private createPolygonizedMomentTensor() {
+        return new PolygonizedMomentTensor(this.currentTensor, beachballs.beachBall(this.currentTensor))
     }
 
     updateXYTP(xy: number, tp: number) {
@@ -72,7 +80,7 @@ export class MomentTensorService {
             Mpp: this.currentTensor.Mpp, Mrp: this.currentTensor.Mrp, Mrr: this.currentTensor.Mrr,
             Mrt: this.currentTensor.Mrt, Mtp: this.currentTensor.Mtp, Mtt: this.currentTensor.Mtt
         })
-        this.momentTensorSubject.next(this.currentTensor)
+        this.polygonizedMomentTensorSubject.next(this.createPolygonizedMomentTensor())
     }
 
     updateTensorForSDR() {
@@ -86,7 +94,7 @@ export class MomentTensorService {
         this.currentTensor.dip = dip
         this.currentTensor.slip = slip
 
-        this.momentTensorSubject.next(this.currentTensor)
+        this.polygonizedMomentTensorSubject.next(this.createPolygonizedMomentTensor())
     }
 
     toggleBAxis(checked: boolean) {
@@ -121,6 +129,6 @@ export class MomentTensorService {
 
     fireModifiedTensor() {
         this.currentTensor = new MomentTensor(this.currentTensor.momentTensorView, this.currentTensor.cartesian, this.currentTensor.spherical)
-        this.momentTensorSubject.next(this.currentTensor)
+        this.polygonizedMomentTensorSubject.next(this.createPolygonizedMomentTensor())
     }
 }

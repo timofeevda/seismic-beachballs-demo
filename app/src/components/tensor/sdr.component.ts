@@ -13,7 +13,7 @@ export class SdrComponent {
     momentTensor: MomentTensor
 
     constructor(private momentTensorService: MomentTensorService) {
-        this.momentTensorService.momentTensorSubject.subscribe(mt => this.momentTensor = mt)
+        this.momentTensorService.polygonizedMomentTensorSubject.subscribe(mt => this.momentTensor = mt.momentTensor)
     }
 
     updateStrike(value: number) {

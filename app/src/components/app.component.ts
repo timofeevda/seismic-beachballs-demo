@@ -29,6 +29,6 @@ export class AppComponent {
     constructor(private momentTensorService: MomentTensorService) { }
 
     ngOnInit() {
-        this.momentTensorService.momentTensorSubject.subscribe(mt => this.momentTensor = mt)
+        this.momentTensorService.polygonizedMomentTensorSubject.subscribe(mt => this.momentTensor = mt.momentTensor)
     }
 }

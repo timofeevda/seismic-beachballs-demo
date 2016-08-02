@@ -49,8 +49,8 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
     private addBeachball(container) {
         let geometry = new three.Geometry()
 
-        let polygons = this.momentTensor.momentTensorView.lowerHemisphere ? beachballs.lowerHemisphereFromMomentTensor(this.momentTensor)
-            : beachballs.beachBall(this.momentTensor)
+        let polygons = this.polygonizedMomentTensor.momentTensor.momentTensorView.lowerHemisphere ? beachballs.rawLowerHemisphere(this.polygonizedMomentTensor.polygons)
+            : this.polygonizedMomentTensor.polygons
 
         this.fillGeometry(geometry, polygons)
 
@@ -72,12 +72,12 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
     }
 
     private addPTBAxes(container) {
-        var sdr = beachballs.mt2sdr(this.momentTensor)
+        var sdr = beachballs.mt2sdr(this.polygonizedMomentTensor.momentTensor)
 
         let axes = [
-            { axis: 'paxis', color: '0x0000ff', enabled: this.momentTensor.momentTensorView.pAxis },
-            { axis: 'taxis', color: '0x00ff00', enabled: this.momentTensor.momentTensorView.tAxis },
-            { axis: 'baxis', color: '0xff0000', enabled: this.momentTensor.momentTensorView.bAxis }
+            { axis: 'paxis', color: '0x0000ff', enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.pAxis },
+            { axis: 'taxis', color: '0x00ff00', enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.tAxis },
+            { axis: 'baxis', color: '0xff0000', enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.bAxis }
         ]
 
         axes.filter(axis => axis.enabled).forEach(axis => container.add(this.generateAxis(sdr[axis.axis], parseInt(axis.color, 16))))
@@ -127,13 +127,13 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
     }
 
     private addFaultPlanes(container) {
-        let {normal, slip} = beachballs.normalslip(this.momentTensor)
+        let {normal, slip} = beachballs.normalslip(this.polygonizedMomentTensor.momentTensor)
 
         var scale = 0.022 * 2200
 
         let planes = [
-            { color: '0xfcbe13', vector: normal, enabled: this.momentTensor.momentTensorView.faultPlane },
-            { color: '0x13b2fc', vector: slip, enabled: this.momentTensor.momentTensorView.auxPlane },
+            { color: '0xfcbe13', vector: normal, enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.faultPlane },
+            { color: '0x13b2fc', vector: slip, enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.auxPlane },
         ]
 
         planes.filter(plane => plane.enabled).forEach(plane => container.add(this.generateFaultPlane(plane.vector, scale, parseInt(plane.color,16))))

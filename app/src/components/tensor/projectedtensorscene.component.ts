@@ -39,13 +39,13 @@ export class ProjectedTensorSceneComponent extends AbstractSceneComponent {
         let polygons = []
         switch (this.projection) {
             case "equalarea":
-            polygons = beachballs.lowerHemisphereEqualAreaNet(this.momentTensor)
+            polygons = beachballs.rawLowerHemisphereEqualAreaNet(this.polygonizedMomentTensor.polygons)
                 break;
             case "wulff":
-                polygons = beachballs.lowerHemisphereWulffNet(this.momentTensor)
+                polygons = beachballs.rawLowerHemisphereWulffNet(this.polygonizedMomentTensor.polygons)
                 break;
             case "orthographic":
-                polygons = beachballs.lowerHemisphereOrthographic(this.momentTensor)
+                polygons = beachballs.rawLowerHemisphereOrthographic(this.polygonizedMomentTensor.polygons)
                 break;
             default:
                 polygons = []
