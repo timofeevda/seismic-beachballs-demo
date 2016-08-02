@@ -49,7 +49,7 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
     private addBeachball(container) {
         let geometry = new three.Geometry()
 
-        let polygons = this.momentTensor.momentTensorView.lowerHemisphere ? beachballs.lowerHemisphere(this.momentTensor)
+        let polygons = this.momentTensor.momentTensorView.lowerHemisphere ? beachballs.lowerHemisphereFromMomentTensor(this.momentTensor)
             : beachballs.beachBall(this.momentTensor)
 
         this.fillGeometry(geometry, polygons)

@@ -82,9 +82,9 @@ export class MomentTensorService {
         this.currentTensor = new MomentTensor(this.currentTensor.momentTensorView,undefined, spherical)
 
         // keep original s/d/r, cause after computation they can be slightly different
-        // this.currentTensor.strike = strike
-        // this.currentTensor.dip = dip
-        // this.currentTensor.slip = slip
+        this.currentTensor.strike = strike
+        this.currentTensor.dip = dip
+        this.currentTensor.slip = slip
 
         this.momentTensorSubject.next(this.currentTensor)
     }
