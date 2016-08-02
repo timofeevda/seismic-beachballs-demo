@@ -3,15 +3,21 @@
         <div class="row">
             <div class="column tensor">
                 <label>Strike</label>
-                <spinner [value]="momentTensor.strike" (valueChange)="updateStrike($event)" [step]="1"></spinner>
+                <div class="ui disabled input">
+                    <input type="text" readonly [value]="momentTensor.strike"/>
+                </div>
             </div>
             <div class="column tensor">
                 <label>Dip</label>
-                <spinner [value]="momentTensor.dip" (valueChange)="updateDip($event)" [step]="1"></spinner>
+                <div class="ui disabled input">
+                    <input type="text" readonly [value]="momentTensor.dip"/>
+                </div>
             </div>
             <div class="column tensor">
                 <label>Rake</label>
-                <spinner [value]="momentTensor.slip" (valueChange)="updateRake($event)" [step]="1"></spinner>
+                <div class="ui disabled input">
+                        <input type="text" readonly [value]="momentTensor.slip"/>
+                </div>
             </div>
         </div>
     </div>

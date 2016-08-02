@@ -30,20 +30,19 @@ export class ProjectedTensorSceneComponent extends AbstractSceneComponent {
         this.scene.add(this.sceneContainer)
         this.camera.position.z = 70
     }
-
+    
     buildSceneContainer() {
         let container = new three.Object3D()
 
         let geometry = new three.Geometry()
 
-        // with simple deep copy of two-dimensioanl array
-        let originalPolygons = this.polygonizedMomentTensor.polygons.map(polygon =>
-            ({ vertices: polygon.vertices.map(point => point.slice()), compressional: polygon.compressional}))
-
+        let originalPolygons = this.polygonizedMomentTensor.polygons.map(polygon => 
+        ({vertices: polygon.vertices.map(point => point.map(v => v)), compressional: polygon.compressional}))
+                
         let polygons = []
         switch (this.projection) {
             case "equalarea":
-                polygons = beachballs.rawLowerHemisphereEqualAreaNet(originalPolygons)
+            polygons = beachballs.rawLowerHemisphereEqualAreaNet(originalPolygons)
                 break;
             case "wulff":
                 polygons = beachballs.rawLowerHemisphereWulffNet(originalPolygons)

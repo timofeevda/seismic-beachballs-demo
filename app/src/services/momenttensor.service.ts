@@ -20,8 +20,8 @@ export class MomentTensorService {
         this.polygonizedMomentTensorSubject = new BehaviorSubject<PolygonizedMomentTensor>(this.createPolygonizedMomentTensor())
     }
 
-    private createPolygonizedMomentTensor() {
-        return new PolygonizedMomentTensor(this.currentTensor, beachballs.beachBall(this.currentTensor))
+    private createPolygonizedMomentTensor(): PolygonizedMomentTensor {
+        return new PolygonizedMomentTensor(this.currentTensor, this.currentTensor.sdrComputationError ? [] : beachballs.beachBall(this.currentTensor))
     }
 
     updateXYTP(xy: number, tp: number) {
@@ -60,40 +60,11 @@ export class MomentTensorService {
         this.updateSDRForTensor()
     }
 
-    updateStrike(strike: number) {
-        this.currentTensor.strike = strike
-        this.updateTensorForSDR()
-    }
-
-    updateDip(dip: number) {
-        this.currentTensor.dip = dip
-        this.updateTensorForSDR()
-    }
-
-    updateRake(rake: number) {
-        this.currentTensor.slip = rake
-        this.updateTensorForSDR()
-    }
-
     updateSDRForTensor() {
         this.currentTensor = new MomentTensor(this.currentTensor.momentTensorView,undefined, {
             Mpp: this.currentTensor.Mpp, Mrp: this.currentTensor.Mrp, Mrr: this.currentTensor.Mrr,
             Mrt: this.currentTensor.Mrt, Mtp: this.currentTensor.Mtp, Mtt: this.currentTensor.Mtt
         })
-        this.polygonizedMomentTensorSubject.next(this.createPolygonizedMomentTensor())
-    }
-
-    updateTensorForSDR() {
-        let {strike, dip, slip} = this.currentTensor
-        let spherical = beachballs.sdr2mt({ strike, dip, rake: slip })
-
-        this.currentTensor = new MomentTensor(this.currentTensor.momentTensorView,undefined, spherical)
-
-        // keep original s/d/r, cause after computation they can be slightly different
-        this.currentTensor.strike = strike
-        this.currentTensor.dip = dip
-        this.currentTensor.slip = slip
-
         this.polygonizedMomentTensorSubject.next(this.createPolygonizedMomentTensor())
     }
 
@@ -129,6 +100,6 @@ export class MomentTensorService {
 
     fireModifiedTensor() {
         this.currentTensor = new MomentTensor(this.currentTensor.momentTensorView, this.currentTensor.cartesian, this.currentTensor.spherical)
-        this.polygonizedMomentTensorSubject.next(this.createPolygonizedMomentTensor())
+        this.polygonizedMomentTensorSubject.next(this.createPolygonizedMomentTensor())       
     }
 }

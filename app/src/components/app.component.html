@@ -10,16 +10,12 @@
             </div>
         </div>
         <div class="ui hidden divider"></div>
-        <segment [header]="'Cartesian coordinates'" [collapsable]='false' [withhelp]='true' [helpid]="'cartesian-help'">
-            <tensor [isCartesian]="true"></tensor>
+        <segment [header]="'Moment tensor entries in r-t-p (up-south-east) basis'" [collapsed]='false' [withhelp]='true' [helpid]="'spherical-help'">
+            <tensor [isCartesian]="flase"></tensor>
         </segment>
         <div class="ui hidden divider"></div>
         <segment [header]="'Strike / Dip / Rake'" [collapsable]='false' [withhelp]='true' [helpid]="'sdr-help'">
             <sdr></sdr>
-        </segment>
-        <div class="ui hidden divider"></div>
-        <segment [header]="'Mij entries in r-t-p (up-south-east) basis'" [collapsed]='true' [withhelp]='true' [helpid]="'spherical-help'">
-            <tensor [isCartesian]="flase"></tensor>
         </segment>
         <div class="ui hidden divider"></div>
         <tensorview></tensorview>
