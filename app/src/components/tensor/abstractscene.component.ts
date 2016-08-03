@@ -42,7 +42,7 @@ export abstract class AbstractSceneComponent {
 
         this.scene = new three.Scene()
 
-        this.renderer = new three.WebGLRenderer({ antialias: true })
+        this.renderer = new three.WebGLRenderer({ antialias: true , alpha: true })
         this.renderer.setClearColor("#e6e6e6", 1)
         this.renderer.setSize(window.innerWidth, window.innerHeight)
 

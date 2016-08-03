@@ -4,6 +4,7 @@ import * as beachballs from 'seismic-beachballs'
 import {MomentTensorService} from '../../services/momenttensor.service'
 import {OrbitControls} from './three.orbitcontrols'
 import {AbstractSceneComponent} from './abstractscene.component'
+import {AxesTool} from './axestool'
 
 let three = require("three");
 
@@ -13,36 +14,39 @@ let three = require("three");
 })
 export class FullTensorSceneComponent extends AbstractSceneComponent {
     controls: any
+    axesTool: AxesTool
 
     constructor(protected momentTensorService: MomentTensorService) {
         super(momentTensorService)
     }
 
     animate() {
-        requestAnimationFrame(() => this.animate());
+        requestAnimationFrame(() => this.animate())
         this.controls.update()
     }
 
     afterInit() {
-        let hemiLight = new three.HemisphereLight(0xffffff, 0x888888, 1.0);
+        let hemiLight = new three.HemisphereLight(0xffffff, 0x888888, 1.0)
 
-        this.scene.add(hemiLight);
+        this.axesTool = new AxesTool()
+
+        this.scene.add(hemiLight)
         this.sceneContainer = this.buildSceneContainer()
-        this.scene.add(this.sceneContainer);
+        this.scene.add(this.sceneContainer)
 
-        this.controls = new OrbitControls(this.camera, this.container.nativeElement);
-        this.controls.addEventListener('change', () => this.render());
+        this.controls = new OrbitControls(this.camera, this.container.nativeElement, this.axesTool)
+        this.controls.addEventListener('change', () => this.render())
 
-        this.camera.position.z = 100;
+        this.camera.position.z = 100
     }
-        
+
     buildSceneContainer() {
         let container = new three.Object3D()
         this.addBeachball(container)
         this.addFaultPlanes(container)
         this.addPTBAxes(container)
         this.addGrid(container)
-        this.addCoordinateArrows(container)
+        //this.addCoordinateArrows(container)
         return container
     }
 
@@ -139,7 +143,7 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
             { color: '0x13b2fc', vector: slip, enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.auxPlane },
         ]
 
-        planes.filter(plane => plane.enabled).forEach(plane => container.add(this.generateFaultPlane(plane.vector, scale, parseInt(plane.color,16))))
+        planes.filter(plane => plane.enabled).forEach(plane => container.add(this.generateFaultPlane(plane.vector, scale, parseInt(plane.color, 16))))
     }
 
     private generateAxis(axis, color) {
@@ -166,6 +170,22 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
         ax.position.set(origin.x, origin.y, origin.z)
 
         return ax
+    }
+
+    render() {
+        this.renderer.setScissorTest(false)
+        this.renderer.setClearColor("#e6e6e6", 1)
+        super.render.call(this)
+        this.renderer.setViewport(0, 0, 120, 120)
+        this.renderer.setScissor(0, 0, 120, 120)
+        this.renderer.setScissorTest(true)
+        this.renderer.setClearColor("#e6e6e6", 1)
+        this.renderer.render(this.axesTool.scene, this.axesTool.camera)
+        var height = this.container.nativeElement.clientHeight
+        var width = this.container.nativeElement.clientWidth
+        this.camera.aspect = width / height
+        this.camera.updateProjectionMatrix()
+        this.renderer.setSize(width, height)
     }
 
 }

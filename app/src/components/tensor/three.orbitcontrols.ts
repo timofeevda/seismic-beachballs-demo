@@ -16,9 +16,12 @@ let THREE = require("three")
 //    Zoom - middle mouse, or mousewheel / touch: two finger spread or squish
 //    Pan - right mouse, or arrow keys / touch: three finter swipe
 
-THREE.OrbitControls = function ( object, domElement ) {
+THREE.OrbitControls = function ( object, domElement, follower ) {
 
 	this.object = object;
+
+	// follower object receives the same rotation angles as the main camera
+    this.follower = follower;
 
 	this.domElement = ( domElement !== undefined ) ? domElement : document;
 
@@ -86,6 +89,14 @@ THREE.OrbitControls = function ( object, domElement ) {
 	//
 	// public methods
 	//
+
+	this.updateFollower = function(offset) {
+        if (!scope.follower) {
+            return;
+        }
+        scope.follower.camera.position.copy(scope.target).add(offset).normalize().multiplyScalar(scope.follower.depth)
+		scope.follower.camera.lookAt(scope.target)
+    };
 
 	this.getPolarAngle = function () {
 
@@ -183,6 +194,8 @@ THREE.OrbitControls = function ( object, domElement ) {
 				sphericalDelta.set( 0, 0, 0 );
 
 			}
+
+			scope.updateFollower(offset);
 
 			scale = 1;
 			panOffset.set( 0, 0, 0 );
