@@ -44,5 +44,11 @@
                 <radio #lowerhemisphere [label]="'Lower Hemisphere'" [checked]="momentTensor.momentTensorView.lowerHemisphere" (onChecked)="toggleLowerHemisphere()"></radio>
             </div>
         </div>
+        <div class="row">
+            <div class="column">
+                <checkbox [label]="'Show mesh'" [checked]="momentTensor.momentTensorView.showMesh" (onChecked)="toggleMeshView($event)"></checkbox>
+            </div>
+            <div class="column"></div>
+        </div>
     </div>
 </segment>

@@ -57,6 +57,8 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
         geometry.computeFaceNormals()
         geometry.computeVertexNormals()
 
+        let showMesh = this.polygonizedMomentTensor.momentTensor.momentTensorView.showMesh
+
         var beachballMesh = three.SceneUtils.createMultiMaterialObject(geometry, [
             new three.MeshLambertMaterial({
                 vertexColors: three.VertexColors,
@@ -65,7 +67,7 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
                 opacity: 1,
                 visible: true
             }),
-            new three.MeshBasicMaterial({ color: 0x222222, wireframe: false, visible: false })
+            new three.MeshBasicMaterial({ color: 0x222222, wireframe: showMesh, visible: showMesh })
         ])
 
         container.add(beachballMesh)

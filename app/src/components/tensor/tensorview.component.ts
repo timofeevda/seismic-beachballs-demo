@@ -40,6 +40,10 @@ export class TensorViewComponent {
         this.momentTensorService.toggleAuxPlane(checked)
     }
 
+    toggleMeshView(checked: boolean) {
+        this.momentTensorService.toggleMesh(checked)
+    }
+
     toggleLowerHemisphere() {
         let lowerHemisphere = !this.momentTensorService.currentTensor.momentTensorView.lowerHemisphere
         this.momentTensorService.toggleLowerHemisphere()
