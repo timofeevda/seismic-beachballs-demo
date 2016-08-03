@@ -75,9 +75,9 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
         var sdr = beachballs.mt2sdr(this.polygonizedMomentTensor.momentTensor)
 
         let axes = [
-            { axis: 'paxis', color: '0x0000ff', enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.pAxis },
-            { axis: 'taxis', color: '0x00ff00', enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.tAxis },
-            { axis: 'baxis', color: '0xff0000', enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.bAxis }
+            { axis: 'paxis', color: '0x00ff00', enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.pAxis },
+            { axis: 'taxis', color: '0xff0000', enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.tAxis },
+            { axis: 'baxis', color: '0x0000ff', enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.bAxis }
         ]
 
         axes.filter(axis => axis.enabled).forEach(axis => container.add(this.generateAxis(sdr[axis.axis], parseInt(axis.color, 16))))
@@ -91,9 +91,10 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
     }
 
     private addCoordinateArrows(container) {
+        // axes in right-handed coordinate system
         let axes = [
-            { color: 0xff0000, direction: new three.Vector3(1, 0, 0) },
-            { color: 0x0000ff, direction: new three.Vector3(0, 1, 0) },
+            { color: 0xff0000, direction: new three.Vector3(0, -1, 0) }, // x axis
+            { color: 0x0000ff, direction: new three.Vector3(1, 0, 0) },  // y axis
             { color: 0x00ff00, direction: new three.Vector3(0, 0, 1) }
         ]
 
