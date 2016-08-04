@@ -35,21 +35,21 @@
 }
 
 .paxis {
-    background-color: blue;
+    background-color: lightgreen;
     width: 17px;
     height: 17px;
     float:right;
 }
 
 .taxis {
-    background-color: greenyellow;
+    background-color: red;
     width: 17px;
     height: 17px;
     float:right;
 }
 
 .baxis {
-    background-color: red;
+    background-color: blue;
     width: 17px;
     height: 17px;
     float:right;
