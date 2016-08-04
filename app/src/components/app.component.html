@@ -10,11 +10,11 @@
             </div>
         </div>
         <div class="ui hidden divider"></div>
-        <segment [header]="'Moment tensor entries in r-t-p (up-south-east) basis'" [collapsed]='false' [withhelp]='true' [helpid]="'spherical-help'">
+        <segment [header]="'Entries in r-t-p (up-south-east) basis'" [collapsed]='false' [withhelp]='true' [helpid]="'spherical-help'">
             <tensor [isCartesian]="flase"></tensor>
         </segment>
         <div class="ui hidden divider"></div>
-        <segment [header]="'Strike / Dip / Rake'" [collapsable]='false' [withhelp]='true' [helpid]="'sdr-help'">
+        <segment [header]="'Strike / Dip / Rake for closest double couple'" [collapsable]='false' [withhelp]='true' [helpid]="'sdr-help'">
             <sdr></sdr>
         </segment>
         <div class="ui hidden divider"></div>
@@ -54,19 +54,13 @@
     </div>
 </div>
 
-<helpopup [id]="'spherical-help'" [header]="'Spherical moment tensor entries in spherical coordinates'">
-    Moment tensor entries represented in spherical coordinates. Six distinct moment tensor entries are used to form 3 x 3 symmetric
-    tensor in spherical coordinates. These values are kept in sync with Strike / Dip / Rake
-</helpopup>
-
-<helpopup [id]="'cartesian-help'" [header]="'Cartesian moment tensor entries'">
-    Moment tensor entries represented in cartesian coordinates. Six distinct moment tensor entries are used to form 3 x 3 symmetric
-    tensor. These values are kept in sync with Strike / Dip / Rake
+<helpopup [id]="'spherical-help'" [header]="'Moment tensor entries in r-t-p (up-south-east) basis'">
+    Moment tensor entries represented in spherical coordinates (r-t-p (up-south-east) basis). Six distinct moment tensor entries are used to form 3 x 3 symmetric
+    tensor in spherical coordinates. These values are used to calculate Strike / Dip / Rake for closest double couple.
 </helpopup>
 
 <helpopup [id]="'sdr-help'" [header]="'Strike / Dip / Rake (Slip)'">
-    Strike, dip, and rake are used to describe earthquake Focal Mechanisms. These values are used to compute symmetric moment
-    tensor and show Double Couple view.
+    Strike, dip, and rake are used to describe earthquake Focal Mechanisms. These values are computed base on Mmment tensor entries in r-t-p (up-south-east) basis
 </helpopup>
 
 <helpopup [id]="'double-couple-help'" [header]="'Closest Double Couple'">

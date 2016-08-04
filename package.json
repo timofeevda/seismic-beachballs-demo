@@ -8,7 +8,7 @@
     "beachballs"
   ],
   "scripts": {
-    "postinstall": "typings install",
+    "postinstall": "typings install --global",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "lite": "lite-server",
