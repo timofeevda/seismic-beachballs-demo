@@ -14,9 +14,9 @@ export class MomentTensorService {
     currentTensor: MomentTensor
 
     constructor() {
-        let cartesianTensor = { Mxx: 99, Mxy: 0, Mxz: 0, Myy: 1, Myz: 0, Mzz: -10 }
+        let sphericalTensor = { Mtt: 99, Mtp: 4, Mrt: 5.5, Mpp: -10, Mrp: 7, Mrr: -10 }
         let momentTensorView: MomentTensorView = {pAxis: true, tAxis: true, bAxis: true, faultPlane: true, auxPlane: true, lowerHemisphere: false, showMesh: false}
-        this.currentTensor = new MomentTensor(momentTensorView, cartesianTensor, undefined)
+        this.currentTensor = new MomentTensor(momentTensorView, undefined, sphericalTensor)
         this.polygonizedMomentTensorSubject = new BehaviorSubject<PolygonizedMomentTensor>(this.createPolygonizedMomentTensor())
     }
 
