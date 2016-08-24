@@ -28,7 +28,7 @@ export class ProjectedTensorSceneComponent extends AbstractSceneComponent {
     afterInit() {
         this.sceneContainer = this.buildSceneContainer()
         this.scene.add(this.sceneContainer)
-        this.camera.position.z = 70
+        this.camera.position.z = 170
     }
     
     buildSceneContainer() {
@@ -37,7 +37,7 @@ export class ProjectedTensorSceneComponent extends AbstractSceneComponent {
         let geometry = new three.Geometry()
 
         let originalPolygons = this.polygonizedMomentTensor.polygons.map(polygon => 
-        ({vertices: polygon.vertices.map(point => point.map(v => v)), compressional: polygon.compressional}))
+            ({vertices: polygon.vertices.map(point => point.map(v => v)), compressional: polygon.compressional}))
                 
         let polygons = []
         switch (this.projection) {

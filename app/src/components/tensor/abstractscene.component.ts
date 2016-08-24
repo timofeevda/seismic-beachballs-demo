@@ -38,7 +38,7 @@ export abstract class AbstractSceneComponent {
         const width = this.container.nativeElement.clientWidth
         const height = this.container.nativeElement.clientHeight
 
-        this.camera = new three.PerspectiveCamera(60, width / height, 1, 10000)
+        this.camera = new three.PerspectiveCamera(35, width / height, 1, 10000)
 
         this.scene = new three.Scene()
 

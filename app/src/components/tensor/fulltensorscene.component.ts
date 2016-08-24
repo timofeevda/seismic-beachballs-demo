@@ -37,7 +37,7 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
         this.controls = new OrbitControls(this.camera, this.container.nativeElement, this.axesTool)
         this.controls.addEventListener('change', () => this.render())
 
-        this.camera.position.z = 100
+        this.camera.position.z = 200
     }
 
     buildSceneContainer() {
@@ -53,8 +53,11 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
     private addBeachball(container) {
         let geometry = new three.Geometry()
 
-        let polygons = this.polygonizedMomentTensor.momentTensor.momentTensorView.lowerHemisphere ? beachballs.rawLowerHemisphere(this.polygonizedMomentTensor.polygons)
-            : this.polygonizedMomentTensor.polygons
+        let originalPolygons = this.polygonizedMomentTensor.polygons.map(polygon =>
+            ({ vertices: polygon.vertices.map(point => point.map(v => v)), compressional: polygon.compressional }))
+
+        let polygons = this.polygonizedMomentTensor.momentTensor.momentTensorView.lowerHemisphere ?
+            beachballs.rawLowerHemisphere(originalPolygons) : originalPolygons
 
         this.fillGeometry(geometry, polygons)
 
