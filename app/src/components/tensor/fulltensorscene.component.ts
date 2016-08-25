@@ -127,7 +127,7 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
             vertexColors: three.VertexColors,
             side: three.DoubleSide,
             transparent: true,
-            opacity: 0.50
+            opacity: 0.8
         });
 
         let plane = new three.Mesh(geometry, material)
@@ -160,13 +160,13 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
                 color: color,
                 wireframe: false,
                 transparent: true,
-                opacity: 0.5
+                opacity: 0.8
             }),
             new three.MeshBasicMaterial({
                 color: 0xaaaaaa,
                 wireframe: true,
                 transparent: true,
-                opacity: 0.5
+                opacity: 0.8
             })])
 
         ax.setRotationFromQuaternion(arrow.quaternion)
