@@ -4,50 +4,73 @@ export class AxesTool {
     scene: any
     camera: any
     depth: number = 300
+    colorScheme = {
+        center: 0xf3792d,
+        south: 0xff0000,
+        east: 0x0000ff,
+        up: 0x00ff00
+    }
     constructor() {
         this.scene = new three.Scene()
-
         this.camera = new three.PerspectiveCamera(60, 1, 1, 100000)
 
+        let container = new three.Object3D()        
+        container.add.apply(container, this.createOrigin())
+        container.add.apply(container, this.createAxesCones())
+        container.add.apply(container, this.createAxesLines())
+        container.add.apply(container, this.createAxesLabels())
 
-        let redColor = 0xff0000
-        let greenColor = 0x00ff00
-        let blueColor = 0x0000ff
-        let centerColor = 0xf3792d
-
-        let parentMesh = new three.Object3D();
-
-        let sphere = new three.Mesh(new three.SphereGeometry(12, 10, 10), new three.MeshLambertMaterial({
-            color: centerColor
-        }))
-        parentMesh.add(sphere)
-
-        // x axis
-        this.addLine(parentMesh, new three.Vector3(0, -55, 0), new three.Euler(0, 0, 0), redColor);
-        // y axis
-        this.addLine(parentMesh, new three.Vector3(55, 0, 0), new three.Euler(0, 0, -Math.PI / 2), blueColor);
-        // z axis
-        this.addLine(parentMesh, new three.Vector3(0, 0, 55), new three.Euler(Math.PI / 2, 0, 0), greenColor);
-        this.addCone(parentMesh, new three.Vector3(110, 0, 0), new three.Euler(0, 0, -Math.PI / 2), blueColor);
-        this.addCone(parentMesh, new three.Vector3(0, -110, 0), new three.Euler(0, 0, -Math.PI), redColor);
-        this.addCone(parentMesh, new three.Vector3(0, 0, 110), new three.Euler(Math.PI / 2, 0, 0), greenColor);
-
-        this.scene.add(new three.HemisphereLight(0xffffff, 0xAAAAAA, 1.0))
-
-        this.scene.add(parentMesh)
+        this.scene.add(container)                
         this.scene.add(this.camera)
+        this.scene.add(new three.HemisphereLight(0xffffff, 0xAAAAAA, 1.0))
     }
 
-    private addLine(container, position, euler, color) {
+    private createOrigin() {
+        return new three.Mesh(new three.SphereGeometry(12, 10, 10), new three.MeshLambertMaterial({
+            color: this.colorScheme.center
+        }))
+    }
+
+    private createAxesLabels() {
+        let labels = [
+            { text: 'E', position: new three.Vector3(125, 0, 0) },
+            { text: 'S', position: new three.Vector3(0, -125, 0) },
+            { text: 'Z', position: new three.Vector3(0, 0, 125) }
+        ]
+
+        return labels.map(label => this.createAxisLabel(label.text, label.position))
+    }
+
+    private createAxesCones() {
+        let axesCones = [            
+            {position: new three.Vector3(0, -110, 0), euler: new three.Euler(0, 0, -Math.PI), color: this.colorScheme.south },            
+            {position: new three.Vector3(110, 0, 0), euler: new three.Euler(0, 0, -Math.PI / 2), color: this.colorScheme.east },            
+            {position: new three.Vector3(0, 0, 110), euler: new three.Euler(Math.PI / 2, 0, 0), color: this.colorScheme.up }
+        ]
+
+        return axesCones.map(cone => this.createCone(cone.position, cone.euler, cone.color))
+    }
+
+    private createAxesLines() {
+        let axesLines = [
+            {position: new three.Vector3(0, -55, 0), euler: new three.Euler(0, 0, 0), color: this.colorScheme.south },
+            {position: new three.Vector3(55, 0, 0), euler: new three.Euler(0, 0, -Math.PI / 2), color: this.colorScheme.east},
+            {position: new three.Vector3(0, 0, 55), euler: new three.Euler(Math.PI / 2, 0, 0), color: this.colorScheme.up}
+        ]
+
+        return axesLines.map(line => this.createLine(line.position, line.euler, line.color))
+    }
+
+    private createLine(position, euler, color) {
         let line = new three.Mesh(new three.CylinderGeometry(5, 5, 110, 50, 1), new three.MeshLambertMaterial({
             color: color
         }))
         line.position.set(position.x, position.y, position.z)
         line.setRotationFromEuler(euler)
-        container.add(line)
+        return line
     }
 
-    private addCone(container, position, euler, color) {
+    private createCone(position, euler, color) {
         let coneGeometry = new three.CylinderGeometry(0, 12, 40, 50, 1)
         var cone = new three.Mesh(coneGeometry, new three.MeshLambertMaterial({
             color: color
@@ -55,6 +78,27 @@ export class AxesTool {
         cone.geometry = coneGeometry
         cone.position.set(position.x, position.y, position.z)
         cone.setRotationFromEuler(euler)
-        container.add(cone)
+        return cone
+    }
+
+    private createAxisLabel(label, position) {
+        let canvas = document.createElement('canvas')
+        canvas.height = 256
+        canvas.width = 256
+        let gc = canvas.getContext('2d')
+        gc.font = "Bold 80px Arial"
+        gc.fillStyle = "#000000"
+        gc.textAlign = 'center'
+        gc.fillText(label, 128, 128)
+
+        let texture = new three.Texture(canvas)
+        texture.needsUpdate = true
+
+        let spriteMaterial = new three.SpriteMaterial({ map: texture })
+
+        var sprite = new three.Sprite(spriteMaterial)
+        sprite.position.set(position.x, position.y, position.z)
+        sprite.scale.set(100, 100, 1)
+        return sprite;
     }
 }

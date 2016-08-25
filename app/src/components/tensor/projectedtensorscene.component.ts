@@ -28,7 +28,7 @@ export class ProjectedTensorSceneComponent extends AbstractSceneComponent {
     afterInit() {
         this.sceneContainer = this.buildSceneContainer()
         this.scene.add(this.sceneContainer)
-        this.camera.position.z = 170
+        this.camera.position.z = 130
     }
     
     buildSceneContainer() {
