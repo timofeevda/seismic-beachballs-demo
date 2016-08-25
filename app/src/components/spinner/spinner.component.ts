@@ -7,7 +7,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core'
 export class SpinnerComponent {
     @Input() value: number
     @Output() valueChange: EventEmitter<number>
-    @Input() step: number = 0.1
+    @Input() step: number = 1
     timeout: number
 
     constructor() {

@@ -4,16 +4,15 @@ import {MomentTensor} from '../../model/momenttensor.model'
 import {MomentTensorService, PolygonizedMomentTensor} from '../../services/momenttensor.service'
 
 import * as _ from 'lodash'
-
-let three = require("three");
+import * as three from 'three'
 
 export abstract class AbstractSceneComponent {
     @ViewChild('container') container: ElementRef
     polygonizedMomentTensor: PolygonizedMomentTensor
-    camera: any
-    scene: any
-    renderer: any
-    sceneContainer: any
+    camera: three.PerspectiveCamera
+    scene: three.Scene
+    renderer: three.WebGLRenderer
+    sceneContainer: three.Object3D
 
     constructor(protected momentTensorService: MomentTensorService) {
         this.momentTensorService.polygonizedMomentTensorSubject.subscribe(pmt => {
@@ -75,27 +74,21 @@ export abstract class AbstractSceneComponent {
         this.renderer.render(this.scene, this.camera)
     }
 
-    fillGeometry(geometry, polygons) {
-        var index = 0
-        polygons.forEach(polygon => {
+    fillGeometry(geometry: three.Geometry, polygons: { vertices: number[][], compressional: boolean }[]) {
+        polygons.forEach((polygon, index) => {
 
-            polygon.vertices.forEach(vertex => {
-                var threePoint = new three.Vector3(vertex[0], vertex[1], vertex[2])
-                threePoint.multiplyScalar(40)
-                geometry.vertices.push(threePoint)
-            });
+            polygon.vertices
+                .map(vertex => new three.Vector3(vertex[0], vertex[1], vertex[2]).multiplyScalar(40))
+                .forEach(point => geometry.vertices.push(point))
 
-            var face1 = new three.Face3(index, index + 1, index + 3)
-            var face2 = new three.Face3(index + 1, index + 2, index + 3)
+            let faceIdx = index * 4
+            let face1 = new three.Face3(faceIdx, faceIdx + 1, faceIdx + 3)
+            let face2 = new three.Face3(faceIdx + 1, faceIdx + 2, faceIdx + 3)
 
             face1.color = polygon.compressional ? new three.Color(0xff0000) : new three.Color(0xffffff)
-
             face2.color = face1.color
-
             geometry.faces.push(face1)
             geometry.faces.push(face2)
-
-            index += 4
         })
     }
 }

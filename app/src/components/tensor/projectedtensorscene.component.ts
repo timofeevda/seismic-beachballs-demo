@@ -1,12 +1,10 @@
 import {Component} from '@angular/core'
 
-import * as beachballs from 'seismic-beachballs'
-
 import {MomentTensorService} from '../../services/momenttensor.service'
 import {AbstractSceneComponent} from './abstractscene.component'
 
-declare var require: any
-let three = require("three");
+import * as beachballs from 'seismic-beachballs'
+import * as three from 'three'
 
 @Component({
     template: `<div #container [style.height]="height"></div>`,
@@ -59,7 +57,7 @@ export class ProjectedTensorSceneComponent extends AbstractSceneComponent {
         geometry.computeFaceNormals()
         geometry.computeVertexNormals()
 
-        var mesh = new three.Mesh(geometry, new three.MeshBasicMaterial({
+        let mesh = new three.Mesh(geometry, new three.MeshBasicMaterial({
             vertexColors: three.VertexColors,
             side: three.DoubleSide,
             wireframe: false,

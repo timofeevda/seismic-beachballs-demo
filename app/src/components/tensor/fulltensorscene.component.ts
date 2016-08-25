@@ -1,12 +1,12 @@
 import {Component} from '@angular/core'
-import * as beachballs from 'seismic-beachballs'
 
 import {MomentTensorService} from '../../services/momenttensor.service'
 import {OrbitControls} from './three.orbitcontrols'
 import {AbstractSceneComponent} from './abstractscene.component'
 import {AxesTool} from './axestool'
 
-let three = require("three");
+import * as three from 'three'
+import * as beachballs from 'seismic-beachballs'
 
 @Component({
     template: `<div #container style="max-height:500px"></div>`,
@@ -153,7 +153,7 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
         var scale = 0.040 * 2200
         var origin = new three.Vector3(0, 0, 0)
         var arrow = new three.ArrowHelper(new three.Vector3(axis[0], axis[1], axis[2]), origin)
-        var axisGeometry = new three.CylinderGeometry(scale * 0.05, scale * 0.05, scale, 10, true)
+        var axisGeometry = new three.CylinderGeometry(scale * 0.05, scale * 0.05, scale, 10)
 
         var ax = three.SceneUtils.createMultiMaterialObject(axisGeometry, [
             new three.MeshBasicMaterial({
