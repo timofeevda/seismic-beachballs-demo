@@ -6,6 +6,7 @@ class MomentTensorView {
     bAxis: boolean
     faultPlane: boolean
     auxPlane: boolean
+    horPlane: boolean
     lowerHemisphere: boolean
     showMesh: boolean
 }
@@ -37,10 +38,16 @@ class MomentTensor implements beachballs.CartesianMomentTensor, beachballs.Spher
         this.updateProperties(cartesian, spherical)
 
         try {
-            let {strike, dip, rake} = beachballs.mt2sdr(this.spherical)
-            this.strike = strike
-            this.slip = rake
-            this.dip = dip
+            let {strike, dip, rake, strike_swap, dip_swap, rake_swap} = beachballs.mt2sdr(this.spherical)
+            if (rake < -90 || rake > 90) {
+                this.strike = strike_swap
+                this.slip = rake_swap
+                this.dip = dip_swap
+            } else {
+                this.strike = strike
+                this.slip = rake
+                this.dip = dip
+            }            
         } catch (e) {
             console.log("Strike/Dip/Rake computation error due to error in getting eigenvalues from tensor matrix. Please, check tensor parameters for correctness.", e);
             this.sdrComputationError = true

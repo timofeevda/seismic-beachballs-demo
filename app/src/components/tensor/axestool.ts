@@ -6,9 +6,9 @@ export class AxesTool {
     depth: number = 300
     colorScheme = {
         center: 0xf3792d,
-        south: 0xff0000,
-        east: 0x0000ff,
-        up: 0x00ff00
+        south: 0xf3792d,
+        east: 0xf3792d,
+        up: 0xf3792d
     }
     constructor() {
         this.scene = new three.Scene()
@@ -35,7 +35,7 @@ export class AxesTool {
         let labels = [
             { text: 'E', position: new three.Vector3(125, 0, 0) },
             { text: 'S', position: new three.Vector3(0, -125, 0) },
-            { text: 'Z', position: new three.Vector3(0, 0, 125) }
+            { text: 'UP', position: new three.Vector3(0, 0, 125) }
         ]
 
         return labels.map(label => this.createAxisLabel(label.text, label.position))

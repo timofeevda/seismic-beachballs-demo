@@ -56,7 +56,7 @@
 }
 
 .faultplane {
-    background-color: #fcbe13;
+    background-color: #ffff00;
     width: 17px;
     height: 17px;
     float:right;
@@ -64,6 +64,13 @@
 
 .auxplane {
     background-color: #13b2fc;
+    width: 17px;
+    height: 17px;
+    float:right;
+}
+
+.horplane {
+    background-color: #d2691e;
     width: 17px;
     height: 17px;
     float:right;

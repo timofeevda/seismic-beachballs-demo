@@ -45,8 +45,6 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
         this.addBeachball(container)
         this.addFaultPlanes(container)
         this.addPTBAxes(container)
-        this.addGrid(container)
-        //this.addCoordinateArrows(container)
         return container
     }
 
@@ -92,43 +90,23 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
         axes.filter(axis => axis.enabled).forEach(axis => container.add(this.generateAxis(sdr[axis.axis], parseInt(axis.color, 16))))
     }
 
-    private addGrid(container) {
-        let gridHelper = new three.GridHelper(80, 10)
-        gridHelper.rotation.x = Math.PI / 2
-        gridHelper.position.z = -45
-        container.add(gridHelper)
-    }
-
-    private addCoordinateArrows(container) {
-        // axes in right-handed coordinate system
-        let axes = [
-            { color: 0xff0000, direction: new three.Vector3(0, -1, 0) }, // x axis
-            { color: 0x0000ff, direction: new three.Vector3(1, 0, 0) },  // y axis
-            { color: 0x00ff00, direction: new three.Vector3(0, 0, 1) }
-        ]
-
-        var origin = new three.Vector3(0, 0, 0)
-        var length = 60
-
-        axes.forEach(element => {
-            var arrowHelper = new three.ArrowHelper(element.direction, origin, length, element.color)
-            container.add(arrowHelper)
-        })
-
-    }
-
-    private generateFaultPlane(orientation, size, color) {
+    private generateFaultPlane(orientation, size, color, opacity) {
+        let circleRadius = size
         let circleShape = new three.Shape()
-        circleShape.absarc(0, 0, size, 0, -Math.PI * 2, true)
+        circleShape.moveTo(0, circleRadius)
+        circleShape.quadraticCurveTo(circleRadius, circleRadius, circleRadius, 0)
+        circleShape.quadraticCurveTo(circleRadius, -circleRadius, 0, -circleRadius)
+        circleShape.quadraticCurveTo(-circleRadius, -circleRadius, -circleRadius, 0)
+        circleShape.quadraticCurveTo(-circleRadius, circleRadius, 0, circleRadius)
 
-        let geometry = circleShape.makeGeometry();
+        let geometry = new three.ShapeGeometry(circleShape)
         let material = new three.MeshLambertMaterial({
             color: color,
             vertexColors: three.VertexColors,
             side: three.DoubleSide,
             transparent: true,
-            opacity: 0.8
-        });
+            opacity: opacity
+        })
 
         let plane = new three.Mesh(geometry, material)
         plane.lookAt(new three.Vector3(orientation[0], orientation[1], orientation[2]))
@@ -142,11 +120,12 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
         var scale = 0.022 * 2200
 
         let planes = [
-            { color: '0xfcbe13', vector: normal, enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.faultPlane },
-            { color: '0x13b2fc', vector: slip, enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.auxPlane },
+            { color: '0xffff00', vector: normal, opacity: 0.5, enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.faultPlane },
+            { color: '0x13b2fc', vector: slip, opacity: 0.5, enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.auxPlane },
+            { color: '0xd2691e', vector: [0, 0, 0], opacity: 1, enabled: this.polygonizedMomentTensor.momentTensor.momentTensorView.horPlane },
         ]
 
-        planes.filter(plane => plane.enabled).forEach(plane => container.add(this.generateFaultPlane(plane.vector, scale, parseInt(plane.color, 16))))
+        planes.filter(plane => plane.enabled).forEach(plane => container.add(this.generateFaultPlane(plane.vector, scale, parseInt(plane.color, 16), plane.opacity)))
     }
 
     private generateAxis(axis, color) {

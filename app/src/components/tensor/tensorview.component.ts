@@ -40,6 +40,10 @@ export class TensorViewComponent {
         this.momentTensorService.toggleAuxPlane(checked)
     }
 
+    toggleHorPlane(checked: boolean) {
+        this.momentTensorService.toggleHorPlane(checked)
+    }
+
     toggleMeshView(checked: boolean) {
         this.momentTensorService.toggleMesh(checked)
     }

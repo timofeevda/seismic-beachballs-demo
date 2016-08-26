@@ -2,22 +2,16 @@
     <div class="ui three column grid">
         <div class="row">
             <div class="column tensor">
-                <label>Strike</label>
-                <div class="ui disabled input">
-                    <input type="text" readonly [value]="momentTensor.strike"/>
-                </div>
+                <label>Strike: </label>
+                <label>{{momentTensor.strike | number:'2.1-2'}}</label>                
             </div>
             <div class="column tensor">
-                <label>Dip</label>
-                <div class="ui disabled input">
-                    <input type="text" readonly [value]="momentTensor.dip"/>
-                </div>
+                <label>Dip: </label>
+                <label>{{momentTensor.dip | number:'2.1-2'}}</label>
             </div>
             <div class="column tensor">
-                <label>Rake</label>
-                <div class="ui disabled input">
-                        <input type="text" readonly [value]="momentTensor.slip"/>
-                </div>
+                <label>Rake: </label>
+                <label>{{momentTensor.slip | number:'2.1-2'}}</label>
             </div>
         </div>
     </div>

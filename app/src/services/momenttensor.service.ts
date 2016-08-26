@@ -15,7 +15,7 @@ export class MomentTensorService {
 
     constructor() {
         let sphericalTensor = { Mtt: 99, Mtp: 4, Mrt: 5.5, Mpp: -10, Mrp: 7, Mrr: -10 }
-        let momentTensorView: MomentTensorView = {pAxis: true, tAxis: true, bAxis: true, faultPlane: true, auxPlane: true, lowerHemisphere: false, showMesh: false}
+        let momentTensorView: MomentTensorView = {pAxis: true, tAxis: true, bAxis: true, faultPlane: true, auxPlane: true, horPlane: false, lowerHemisphere: false, showMesh: false}
         this.currentTensor = new MomentTensor(momentTensorView, undefined, sphericalTensor)
         this.polygonizedMomentTensorSubject = new BehaviorSubject<PolygonizedMomentTensor>(this.createPolygonizedMomentTensor())
     }
@@ -90,6 +90,11 @@ export class MomentTensorService {
 
     toggleAuxPlane(checked: boolean) {
         this.currentTensor.momentTensorView.auxPlane = checked
+        this.fireModifiedTensor()
+    }
+
+    toggleHorPlane(checked: boolean) {
+        this.currentTensor.momentTensorView.horPlane = checked
         this.fireModifiedTensor()
     }
 

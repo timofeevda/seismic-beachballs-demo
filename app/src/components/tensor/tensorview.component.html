@@ -20,7 +20,7 @@
 </segment>
 <div class="ui hidden divider"></div>
 <segment [header]="'Nodal planes'">
-    <div class="ui two column grid">
+    <div class="ui three column grid">
         <div class="row">
             <div class="column">
                 <checkbox [label]="'Fault plane'" [checked]="momentTensor.momentTensorView.faultPlane" (onChecked)="toggleFaultPlane($event)"></checkbox>
@@ -29,6 +29,10 @@
             <div class="column">
                 <checkbox [label]="'Aux. plane'" [checked]="momentTensor.momentTensorView.auxPlane" (onChecked)="toggleAuxPlane($event)"></checkbox>
                 <div class="auxplane"></div>
+            </div>
+            <div class="column">
+                <checkbox [label]="'Horizontal plane'" [checked]="momentTensor.momentTensorView.horPlane" (onChecked)="toggleHorPlane($event)"></checkbox>
+                <div class="horplane"></div>
             </div>
         </div>
     </div>
