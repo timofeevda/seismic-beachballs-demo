@@ -7,7 +7,7 @@ export class ScientificNotationPipe implements PipeTransform {
 
     transform(value: number, args: any[]) {
         if (value && !isNaN(value)) {
-            return value.toExponential()
+            return value.toExponential(4)
         }
     }
     

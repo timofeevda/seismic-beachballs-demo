@@ -6,15 +6,16 @@ import * as three from 'three'
 import {MomentTensorService} from '../../services/momenttensor.service'
 import {AbstractSceneComponent} from './abstractscene.component'
 
-
+/**
+ * 3D (Three.js) double couple scene replacing deprecated DoubleCoupleSceneComponent
+ */
 @Component({
     template: `<div #container [style.height]="height"></div>`,
-    selector: 'projectedtensorscene',
-    inputs: ['height', 'projection']
+    selector: 'threedoublecouplescene',
+    inputs: ['height']
 })
-export class ProjectedTensorSceneComponent extends AbstractSceneComponent {
+export class ThreeDoubleCoupleSceneComponent extends AbstractSceneComponent {
     height: string
-    projection: string
 
     constructor(protected momentTensorService: MomentTensorService) {
         super(momentTensorService)
@@ -29,29 +30,31 @@ export class ProjectedTensorSceneComponent extends AbstractSceneComponent {
         this.scene.add(this.sceneContainer)
         this.camera.position.z = 130
     }
-    
+
     buildSceneContainer() {
         let container = new three.Object3D()
 
         let geometry = new three.Geometry()
 
-        let originalPolygons = this.polygonizedMomentTensor.polygons.map(polygon => 
-            ({vertices: polygon.vertices.map(point => point.map(v => v)), compressional: polygon.compressional}))
-                
-        let polygons = []
-        switch (this.projection) {
-            case "equalarea":
-            polygons = beachballs.rawLowerHemisphereEqualAreaNet(originalPolygons)
-                break;
-            case "wulff":
-                polygons = beachballs.rawLowerHemisphereWulffNet(originalPolygons)
-                break;
-            case "orthographic":
-                polygons = beachballs.rawLowerHemisphereOrthographic(originalPolygons)
-                break;         
-            default:
-                polygons = []
+        let momenttensor = this.polygonizedMomentTensor.momentTensor
+        
+        // moment tensor representing only double couple
+        let sphericalTensor = beachballs.sdr2mt({ strike: momenttensor.strike, dip: momenttensor.dip, rake: momenttensor.slip })
+        
+        let doubleCouple = {
+            Mrr: sphericalTensor.Mrr,
+            Mtt: sphericalTensor.Mtt,
+            Mpp: sphericalTensor.Mpp,
+            Mrt: sphericalTensor.Mrt,
+            Mrp: sphericalTensor.Mrp,
+            Mtp: sphericalTensor.Mtp,
+            strike: momenttensor.strike,
+            dip: momenttensor.dip,
+            slip: momenttensor.slip
         }
+
+        let polygons = beachballs.lowerHemisphereEqualAreaNet(doubleCouple).map(polygon =>
+            ({ vertices: polygon.vertices.map(point => point.map(v => v)), compressional: polygon.compressional }))
 
         this.fillGeometry(geometry, polygons)
 
@@ -69,6 +72,7 @@ export class ProjectedTensorSceneComponent extends AbstractSceneComponent {
 
         return container
     }
+
 }
 
 

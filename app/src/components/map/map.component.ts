@@ -58,7 +58,7 @@ export class MapComponent {
             target: 'map',
             view: new ol.View({
                 center: [0, 0],
-                zoom: 1
+                zoom: 1.5
             })
         })
 
@@ -75,6 +75,9 @@ export class MapComponent {
                         this.addEventFeature(event)
                     }
                 })
+            } else {
+                this.map.getView().setCenter([0,0])
+                this.map.getView().setZoom(1.5)
             }
         })
 
@@ -88,7 +91,7 @@ export class MapComponent {
             this.usgsquery.selectedUSGSEvent.next(usgsEvent ? usgsEvent : this.usgsquery.emptySelectedEvent)
         })
 
-        this.map.on('mousemove', (event) => {
+        this.map.on('pointermove', (event) => {
             let usgsEvent: USGSEvent
             this.map.forEachFeatureAtPixel(event.pixel, (feature, layer) => {
                 if (!usgsEvent) {

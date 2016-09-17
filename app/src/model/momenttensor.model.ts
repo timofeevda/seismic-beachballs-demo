@@ -47,7 +47,7 @@ class MomentTensor implements beachballs.CartesianMomentTensor, beachballs.Spher
                 this.strike = strike
                 this.slip = rake
                 this.dip = dip
-            }            
+            }                        
         } catch (e) {
             console.log("Strike/Dip/Rake computation error due to error in getting eigenvalues from tensor matrix. Please, check tensor parameters for correctness.", e);
             this.sdrComputationError = true

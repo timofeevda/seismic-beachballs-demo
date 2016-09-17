@@ -13,7 +13,7 @@ export class USGSQueryService {
     private detailURLsCache: { [key: string]: USGSEvent } = {}    
     private usgsEventsQuerySubject: BehaviorSubject<any[]>
     private requestPrefix: string = `http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&producttype=moment-tensor&reviewstatus=reviewed&orderby=time&`    
-    private emptyEvents: { [key: string]: USGSEvent } = { 'empty': new USGSEvent('', '', 0, 0, '') }
+    emptyEvents: { [key: string]: USGSEvent } = { 'empty': new USGSEvent('', '', 0, 0, '') }
     emptySelectedEvent: USGSEvent = new USGSEvent('', '', 0, 0, '')
     usgsEvents: BehaviorSubject<{ [key: string]: USGSEvent }>
     selectedUSGSEvent: BehaviorSubject<USGSEvent> 
@@ -96,15 +96,15 @@ export class USGSQueryService {
 
     private createEventDetailsObservable(usgsEvents: { [key: string]: USGSEvent }): Observable<USGSEvent> {
         let detailsUrlCache = this.detailURLsCache
-        let features = Object.keys(usgsEvents).map(key => usgsEvents[key])
+        let features = Object.keys(usgsEvents).map(key => usgsEvents[key]).reverse()
         let timeout = -1
         let observeFunction = (features: USGSEvent[], observer) => {
             let feature = features.pop()
             if (feature) {
                 observer.next(feature)
-                let timeout = 300
+                let timeout = 100
                 if (features.length > 0) {
-                    timeout = detailsUrlCache[features[features.length - 1].id] ? 0 : 300
+                    timeout = detailsUrlCache[features[features.length - 1].id] ? 0 : 100
                 }
                 timeout = window.setTimeout(() => observeFunction(features, observer), timeout)
             } else {
@@ -112,7 +112,7 @@ export class USGSQueryService {
             }
         }
         return Observable.create((observer) => {
-            timeout = window.setTimeout(() => observeFunction(features, observer), 300)
+            timeout = window.setTimeout(() => observeFunction(features, observer), 100)
             return () => {
                 if (timeout !== -1) {
                     window.clearTimeout(timeout)

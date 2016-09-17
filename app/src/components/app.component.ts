@@ -9,7 +9,7 @@ import {MomentTensor} from '../model/momenttensor.model'
 import {MomentTensorService, USGSView} from '../services/momenttensor.service'
 import {FullTensorSceneComponent} from './tensor/fulltensorscene.component'
 import {ProjectedTensorSceneComponent} from './tensor/projectedtensorscene.component'
-import {DoubleCoupleSceneComponent} from './tensor/doublecouplescene.component'
+import {ThreeDoubleCoupleSceneComponent} from './tensor/threedoublecouplescene.component'
 import {TensorViewComponent} from './tensor/tensorview.component'
 import {HelpPopupComponent} from './helpopup/helpopup.component'
 import {MapComponent} from './map/map.component'
@@ -22,7 +22,7 @@ import {BeachBallCanvasRendererService} from '../services/beachballrenderer.serv
     selector: 'tensor-app',
     directives: [SegmentComponent, TensorComponent, SdrComponent,
         FullTensorSceneComponent, ProjectedTensorSceneComponent,
-        DoubleCoupleSceneComponent, TensorViewComponent, HelpPopupComponent, MapComponent, USGSQueryComponent],
+        ThreeDoubleCoupleSceneComponent, TensorViewComponent, HelpPopupComponent, MapComponent, USGSQueryComponent],
     inputs: ['cartesianTensor', 'sphericalTensor'],
     providers: [MomentTensorService, USGSQueryService, BeachBallCanvasRendererService]
 })

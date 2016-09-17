@@ -5,6 +5,9 @@ import * as beachballs from 'seismic-beachballs'
 import {MomentTensor} from '../../model/momenttensor.model'
 import {MomentTensorService, PolygonizedMomentTensor} from '../../services/momenttensor.service'
 
+/**
+ * Deprecated: 2D canvas scene representing double couple based on Mirone code
+ */
 @Component({
     template: require('./doublecouplescene.component.html'),
     selector: 'doublecouplescene'

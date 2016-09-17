@@ -21,11 +21,11 @@ module.exports = {
             {test: /\.html$/, loader: 'raw-loader'},
         ]
     },
-    plugins: [
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false
-        }
-      })
-    ]
+    // plugins: [
+    //   new webpack.optimize.UglifyJsPlugin({
+    //     compress: {
+    //       warnings: false
+    //     }
+    //   })
+    // ]
 };

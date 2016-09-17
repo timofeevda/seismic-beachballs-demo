@@ -34,6 +34,10 @@
     padding-right: 2rem;
 }
 
+.ui.dimmer {
+    background-color: rgba(0,0,0,0.3)
+}
+
 .paxis {
     background-color: lightgreen;
     width: 17px;

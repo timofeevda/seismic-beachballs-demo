@@ -39,7 +39,7 @@ export class BeachBallCanvasRendererService {
             sphMT.strike = strike
             sphMT.dip = dip
             sphMT.slip = rake
-            canvas = this.createCanvas(beachballs.lowerHemisphereEqualAreaNet(sphMT))
+            canvas = this.createCanvas(beachballs.lowerHemisphereEqualAreaNet(sphMT, 20, 15))
         } catch (error) {
             usgsEvent.error = '' + error
             canvas = this.errorCanvas
