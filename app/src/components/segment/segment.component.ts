@@ -1,6 +1,6 @@
 import {Component, Input, Output} from '@angular/core'
 
-declare var $: any
+declare var jQuery: any
 
 @Component({
     template: require('./segment.component.html'),
@@ -21,7 +21,7 @@ export class SegmentComponent {
     }
 
     showHelp() {
-        $('#' + this.helpid).modal('show')
+        jQuery('#' + this.helpid).modal('show')
     }
 
 }

@@ -1,0 +1,43 @@
+<div #popup class="ol-popup" style="display: none;">
+    <a #popupcloser href="#" class="ol-popup-closer"></a>
+    <div #popupcontent>
+        <p></p>
+        <div class="ui three column grid">           
+            <div class="row usgs-moment">
+                <div class="column">
+                    <label>Mrr: {{usgsEvent.Mrr | scientific}}</label>                    
+                </div>
+                <div class="column">
+                    <label>Mtt: {{usgsEvent.Mtt | scientific}}</label>
+                </div>
+                <div class="column">
+                    <label>Mpp: {{usgsEvent.Mpp | scientific}}</label>
+                </div>
+            </div>
+            <div class="row usgs-moment">
+                <div class="column">
+                    <label>Mrt: {{usgsEvent.Mrt | scientific}}</label>
+                </div>
+                <div class="column">
+                    <label>Mrp: {{usgsEvent.Mrp | scientific}}</label>
+                </div>
+                <div class="column">
+                    <label>Mtp: {{usgsEvent.Mtp | scientific}}</label>
+                </div>
+            </div>
+            <div class="row usgs-moment">
+                <div class="column">
+                    <label>Mscalar: {{usgsEvent.Mscalar | scientific}}</label>
+                </div>                
+            </div>
+        </div>
+        <br/>
+        <p>Place: {{usgsEvent.place}}</p>
+        <p>Details: <a href="{{usgsEvent.detail}}" target="_blank">View on USGS</a></p>
+        <div class="ui one column centered grid">
+            <div class="center aligned column">
+                <button class="ui primary button" type="button" (click)="pickTensor()" [attr.disabled]="usgsEvent.error ? true : null">Show 3D view</button>
+            </div>
+        </div>
+    </div>
+</div>

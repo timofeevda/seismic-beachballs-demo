@@ -6,10 +6,7 @@ import {MomentTensor} from '../../model/momenttensor.model'
 import {MomentTensorService, PolygonizedMomentTensor} from '../../services/momenttensor.service'
 
 @Component({
-    template: `
-    <div #container [style.height]="height" align="center" style="background-color: e6e6e6;">
-        <canvas #canvas></canvas>
-    </div>`,
+    template: require('./doublecouplescene.component.html'),
     selector: 'doublecouplescene'
 })
 export class DoubleCoupleSceneComponent {    

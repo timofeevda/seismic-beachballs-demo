@@ -1,27 +1,53 @@
 import { Injectable } from '@angular/core'
-import {Subject, BehaviorSubject} from 'RxJs'
+import {Subject, BehaviorSubject} from 'rxjs'
 import * as beachballs from "seismic-beachballs"
 
 import {MomentTensor, MomentTensorView} from '../model/momenttensor.model'
+import {USGSQueryService} from './usgsquery.service'
+
+export class USGSView {
+    constructor(public isUSGSView: boolean = false) { }
+}
 
 export class PolygonizedMomentTensor {
-    constructor(public momentTensor: MomentTensor, public polygons: { vertices: number[][], compressional: boolean }[]){}
+    constructor(public momentTensor: MomentTensor, public polygons: { vertices: number[][], compressional: boolean }[]) { }
 }
 
 @Injectable()
 export class MomentTensorService {
     polygonizedMomentTensorSubject: Subject<PolygonizedMomentTensor>
     currentTensor: MomentTensor
+    usgsViewSubject: BehaviorSubject<USGSView>
 
-    constructor() {
+    constructor(private usgsQueryService: USGSQueryService) {
         let sphericalTensor = { Mtt: 99, Mtp: 4, Mrt: 5.5, Mpp: -10, Mrp: 7, Mrr: -10 }
-        let momentTensorView: MomentTensorView = {pAxis: true, tAxis: true, bAxis: true, faultPlane: true, auxPlane: true, horPlane: false, lowerHemisphere: false, showMesh: false}
+        let momentTensorView: MomentTensorView = { pAxis: true, tAxis: true, bAxis: true, faultPlane: true, auxPlane: true, horPlane: false, lowerHemisphere: false, showMesh: false }
         this.currentTensor = new MomentTensor(momentTensorView, undefined, sphericalTensor)
         this.polygonizedMomentTensorSubject = new BehaviorSubject<PolygonizedMomentTensor>(this.createPolygonizedMomentTensor())
+        this.usgsViewSubject = new BehaviorSubject(new USGSView())
+        this.usgsQueryService.pickedUSGSEvent.subscribe(usgsEvent => {
+            if (usgsEvent != this.usgsQueryService.emptySelectedEvent) {
+                let scalar = usgsEvent.Mscalar
+                this.updateTensorEntries(
+                    usgsEvent.Mrr / scalar, usgsEvent.Mtt / scalar, usgsEvent.Mpp / scalar,
+                    usgsEvent.Mrt / scalar, usgsEvent.Mrp / scalar, usgsEvent.Mtp / scalar)
+                this.toggleUSGSView()
+            }
+        })
     }
 
     private createPolygonizedMomentTensor(): PolygonizedMomentTensor {
         return new PolygonizedMomentTensor(this.currentTensor, this.currentTensor.sdrComputationError ? [] : beachballs.beachBall(this.currentTensor))
+    }
+
+    updateTensorEntries(Mrr: number, Mtt: number, Mpp: number, Mrt: number, Mrp: number, Mtp: number) {
+        this.currentTensor.Mrr = Mrr
+        this.currentTensor.Mtt = Mtt
+        this.currentTensor.Mpp = Mpp
+        this.currentTensor.Mrt = Mrt
+        this.currentTensor.Mrp = Mrp
+        this.currentTensor.Mtp = Mtp
+        this.updateSDRForTensor()
     }
 
     updateXYTP(xy: number, tp: number) {
@@ -61,7 +87,7 @@ export class MomentTensorService {
     }
 
     updateSDRForTensor() {
-        this.currentTensor = new MomentTensor(this.currentTensor.momentTensorView,undefined, {
+        this.currentTensor = new MomentTensor(this.currentTensor.momentTensorView, undefined, {
             Mpp: this.currentTensor.Mpp, Mrp: this.currentTensor.Mrp, Mrr: this.currentTensor.Mrr,
             Mrt: this.currentTensor.Mrt, Mtp: this.currentTensor.Mtp, Mtt: this.currentTensor.Mtt
         })
@@ -71,17 +97,17 @@ export class MomentTensorService {
     toggleBAxis(checked: boolean) {
         this.currentTensor.momentTensorView.bAxis = checked
         this.fireModifiedTensor()
-	}
+    }
 
-	togglePAxis(checked: boolean) {
-		this.currentTensor.momentTensorView.pAxis = checked
+    togglePAxis(checked: boolean) {
+        this.currentTensor.momentTensorView.pAxis = checked
         this.fireModifiedTensor()
-	}
+    }
 
-	toggleTAxis(checked: boolean) {
-		this.currentTensor.momentTensorView.tAxis = checked
+    toggleTAxis(checked: boolean) {
+        this.currentTensor.momentTensorView.tAxis = checked
         this.fireModifiedTensor()
-	}
+    }
 
     toggleFaultPlane(checked: boolean) {
         this.currentTensor.momentTensorView.faultPlane = checked
@@ -108,8 +134,12 @@ export class MomentTensorService {
         this.fireModifiedTensor()
     }
 
+    toggleUSGSView() {
+        this.usgsViewSubject.next(new USGSView(!this.usgsViewSubject.getValue().isUSGSView))
+    }
+
     fireModifiedTensor() {
         this.currentTensor = new MomentTensor(this.currentTensor.momentTensorView, this.currentTensor.cartesian, this.currentTensor.spherical)
-        this.polygonizedMomentTensorSubject.next(this.createPolygonizedMomentTensor())       
+        this.polygonizedMomentTensorSubject.next(this.createPolygonizedMomentTensor())
     }
 }

@@ -96,7 +96,7 @@ export class AxesTool {
 
         let spriteMaterial = new three.SpriteMaterial({ map: texture })
 
-        var sprite = new three.Sprite(spriteMaterial)
+        let sprite = new three.Sprite(spriteMaterial)
         sprite.position.set(position.x, position.y, position.z)
         sprite.scale.set(100, 100, 1)
         return sprite;

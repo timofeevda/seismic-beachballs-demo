@@ -1,10 +1,9 @@
 import {ElementRef, ViewChild} from '@angular/core'
 
+import * as three from 'three'
+
 import {MomentTensor} from '../../model/momenttensor.model'
 import {MomentTensorService, PolygonizedMomentTensor} from '../../services/momenttensor.service'
-
-import * as _ from 'lodash'
-import * as three from 'three'
 
 export abstract class AbstractSceneComponent {
     @ViewChild('container') container: ElementRef
@@ -26,6 +25,12 @@ export abstract class AbstractSceneComponent {
     abstract animate()
     abstract afterInit()
     abstract buildSceneContainer()
+
+    ngOnDestroy() {
+        this.renderer.forceContextLoss()
+        this.renderer.context = null
+        this.renderer.domElement = null
+    }
 
     ngAfterViewInit() {
         this.init()

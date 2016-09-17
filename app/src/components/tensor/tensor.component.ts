@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core'
 
 import {MomentTensor} from '../../model/momenttensor.model'
-import {MomentTensorService} from '../../services/momenttensor.service'
+import {MomentTensorService, USGSView} from '../../services/momenttensor.service'
 import {SpinnerComponent} from '../spinner/spinner.component'
 
 @Component({
@@ -12,9 +12,19 @@ import {SpinnerComponent} from '../spinner/spinner.component'
 export class TensorComponent {
     @Input() isCartesian: boolean
     momentTensor: MomentTensor
-
+    usgsView: USGSView
+    modeSelectorText: string = 'Pick USGS event'
     constructor(private momentTensorService: MomentTensorService) {
+        this.momentTensorService.usgsViewSubject.subscribe(usgsView => {
+            this.usgsView = usgsView
+            this.modeSelectorText = this.usgsView.isUSGSView ? 'Use manual entries' : 'Pick USGS event'
+
+        })
         this.momentTensorService.polygonizedMomentTensorSubject.subscribe(mt => this.momentTensor = mt.momentTensor)
+    }
+
+    pickUSGS() {
+        this.momentTensorService.toggleUSGSView()
     }
 
     updateMxy(val: number) {

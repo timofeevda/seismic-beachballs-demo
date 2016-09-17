@@ -1,12 +1,13 @@
 import {Component} from '@angular/core'
 
+import * as three from 'three'
+import * as beachballs from 'seismic-beachballs'
+
 import {MomentTensorService} from '../../services/momenttensor.service'
 import {OrbitControls} from './three.orbitcontrols'
 import {AbstractSceneComponent} from './abstractscene.component'
 import {AxesTool} from './axestool'
 
-import * as three from 'three'
-import * as beachballs from 'seismic-beachballs'
 
 @Component({
     template: `<div #container style="max-height:500px"></div>`,
@@ -110,8 +111,7 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
 
         let plane = new three.Mesh(geometry, material)
         plane.lookAt(new three.Vector3(orientation[0], orientation[1], orientation[2]))
-
-        return plane;
+        return plane
     }
 
     private addFaultPlanes(container) {
@@ -169,7 +169,4 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
         this.camera.updateProjectionMatrix()
         this.renderer.setSize(width, height)
     }
-
 }
-
-

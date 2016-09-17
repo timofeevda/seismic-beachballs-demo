@@ -22,12 +22,15 @@
     </div>
     <div class="eleven wide column">
         <div class="row">
-            <segment [header]="'Moment Tensor'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'beachball-help'">
+            <segment *ngIf="!usgsView.isUSGSView" [header]="'Moment Tensor'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'beachball-help'">
                 <fulltensorscene></fulltensorscene>
             </segment>
+            <segment *ngIf="usgsView.isUSGSView" [header]="'Events with computed moment tensor'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'beachball-help'">
+                    <map></map>
+            </segment>
         </div>
-        <div class="ui hidden divider"></div>
-        <div class="row">
+        <div class="ui hidden divider" *ngIf="!usgsView.isUSGSView"></div>
+        <div class="row" *ngIf="!usgsView.isUSGSView">
             <div class="ui grid">
                 <div class="four wide column">
                     <segment [header]="'Equal Area Net Projection'" [collapsable]='false' [fit]='true'>
@@ -60,7 +63,7 @@
 </helpopup>
 
 <helpopup [id]="'sdr-help'" [header]="'Strike / Dip / Rake (Slip)'">
-    Strike, dip, and rake are used to describe earthquake Focal Mechanisms. These values are computed base on Mmment tensor entries in r-t-p (up-south-east) basis
+    Strike, dip, and rake are used to describe earthquake Focal Mechanisms. These values are computed based on moment tensor entries in r-t-p (up-south-east) basis
 </helpopup>
 
 <helpopup [id]="'double-couple-help'" [header]="'Closest Double Couple'">

@@ -1,10 +1,11 @@
 import {Component} from '@angular/core'
 
+import * as beachballs from 'seismic-beachballs'
+import * as three from 'three'
+
 import {MomentTensorService} from '../../services/momenttensor.service'
 import {AbstractSceneComponent} from './abstractscene.component'
 
-import * as beachballs from 'seismic-beachballs'
-import * as three from 'three'
 
 @Component({
     template: `<div #container [style.height]="height"></div>`,

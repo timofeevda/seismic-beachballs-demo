@@ -1,0 +1,25 @@
+<div class="ui form">
+    <div class="five fields">
+        <div class="field mini">
+            <label>Start time</label>
+            <input type="text" [(ngModel)]="queryModel.starttime">
+        </div>
+        <div class="field mini">
+            <label>End time</label>
+            <input type="text" [(ngModel)]="queryModel.endtime">
+        </div>
+        <div class="field mini">
+            <label>Limit</label>
+            <input type="text" [(ngModel)]="queryModel.limit">
+        </div>
+        <div class="field">
+            <label>&nbsp;</label>
+            <button #searchbutton class="ui primary button" type="button" (click)="searchUSGS()">Search</button>
+            <div class="ui left pointing red basic label" *ngIf="zeroResults">Zero events found</div>
+        </div>
+        <div class="field">
+            <label>Images generated:</label>
+            <progressbar #progress></progressbar>
+        </div>
+    </div>
+</div>

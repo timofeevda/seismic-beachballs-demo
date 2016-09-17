@@ -1,0 +1,9 @@
+<usgsquery></usgsquery>
+<div class="ui segment">
+    <div class="ui dimmer" [class.active]="searching">
+        <div class="ui text loader">Getting USGS events</div>
+    </div>
+    <div id="map" #map></div>
+    <div id="loading-overlays" style="display: none;"></div>
+    <featurepopup #featurepopup></featurepopup>
+</div>

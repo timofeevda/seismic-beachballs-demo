@@ -2,37 +2,36 @@
     <div class="ui three column grid">
         <div class="row">
             <div class="column tensor">
-                <label *ngIf="isCartesian">Mxx</label>
-                <label *ngIf="!isCartesian">Mtt</label>
-                <spinner [value]="isCartesian ? momentTensor.Mxx : momentTensor.Mtt" (valueChange)="updateMxx($event)"></spinner>
+                <label>Mtt</label>
+                <spinner [value]="momentTensor.Mtt" (valueChange)="updateMxx($event)"></spinner>
             </div>
             <div class="column tensor">
-                <label *ngIf="isCartesian">Mxy</label>
-                <label *ngIf="!isCartesian">Mtp</label>
-                <spinner [value]="isCartesian ? momentTensor.Mxy : momentTensor.Mtp" (valueChange)="updateMxy($event)"></spinner>
+                <label>Mtp</label>
+                <spinner [value]="momentTensor.Mtp" (valueChange)="updateMxy($event)"></spinner>
             </div>
             <div class="column tensor">
-                <label *ngIf="isCartesian">Mxz</label>
-                <label *ngIf="!isCartesian">Mrt</label>
-                <spinner [value]="isCartesian ? momentTensor.Mxz : momentTensor.Mrt" (valueChange)="updateMxz($event)"></spinner>
+                <label>Mrt</label>
+                <spinner [value]="momentTensor.Mrt" (valueChange)="updateMxz($event)"></spinner>
             </div>
         </div>
         <div class="row">
             <div class="column tensor">
-                <label *ngIf="isCartesian">Myy</label>
-                <label *ngIf="!isCartesian">Mpp</label>
-                <spinner [value]="isCartesian ? momentTensor.Myy : momentTensor.Mpp" (valueChange)="updateMyy($event)"></spinner>
+                <label>Mpp</label>
+                <spinner [value]="momentTensor.Mpp" (valueChange)="updateMyy($event)"></spinner>
             </div>
             <div class="column tensor">
-                <label *ngIf="isCartesian">Myz</label>
-                <label *ngIf="!isCartesian">Mrp</label>
-                <spinner [value]="isCartesian ? momentTensor.Myz : momentTensor.Mrp" (valueChange)="updateMyz($event)"></spinner>
+                <label>Mrp</label>
+                <spinner [value]="momentTensor.Mrp" (valueChange)="updateMyz($event)"></spinner>
             </div>
             <div class="column tensor">
-                <label *ngIf="isCartesian">Mzz</label>
-                <label *ngIf="!isCartesian">Mrr</label>
-                <spinner [value]="isCartesian ? momentTensor.Mzz : momentTensor.Mrr" (valueChange)="updateMzz($event)"></spinner>
+                <label>Mrr</label>
+                <spinner [value]="momentTensor.Mrr" (valueChange)="updateMzz($event)"></spinner>
             </div>
+        </div>
+    </div>
+    <div class="ui one column centered grid">
+        <div class="center aligned column">
+            <button class="ui primary button" type="button" (click)="pickUSGS()">{{modeSelectorText}}</button>
         </div>
     </div>
 </div>
