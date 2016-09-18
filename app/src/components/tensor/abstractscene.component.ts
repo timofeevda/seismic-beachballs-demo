@@ -1,9 +1,11 @@
 import {ElementRef, ViewChild} from '@angular/core'
 
 import * as three from 'three'
+import {Subscription} from 'rxjs'
 
 import {MomentTensor} from '../../model/momenttensor.model'
 import {MomentTensorService, PolygonizedMomentTensor} from '../../services/momenttensor.service'
+
 
 export abstract class AbstractSceneComponent {
     @ViewChild('container') container: ElementRef
@@ -12,9 +14,11 @@ export abstract class AbstractSceneComponent {
     scene: three.Scene
     renderer: three.WebGLRenderer
     sceneContainer: three.Object3D
+    tensorSubscription: Subscription
+    resizeListener: EventListenerOrEventListenerObject = () => { this.onWindowResize() }
 
     constructor(protected momentTensorService: MomentTensorService) {
-        this.momentTensorService.polygonizedMomentTensorSubject.subscribe(pmt => {
+        this.tensorSubscription = this.momentTensorService.polygonizedMomentTensorSubject.subscribe(pmt => {
             this.polygonizedMomentTensor = pmt
             if (this.scene) {
                 this.updateTensorView()
@@ -27,9 +31,11 @@ export abstract class AbstractSceneComponent {
     abstract buildSceneContainer()
 
     ngOnDestroy() {
+        this.tensorSubscription.unsubscribe()
         this.renderer.forceContextLoss()
         this.renderer.context = null
         this.renderer.domElement = null
+        window.removeEventListener('resize', this.resizeListener, false)
     }
 
     ngAfterViewInit() {
@@ -52,7 +58,7 @@ export abstract class AbstractSceneComponent {
 
         this.container.nativeElement.appendChild(this.renderer.domElement)
 
-        window.addEventListener('resize', () => { this.onWindowResize() }, false)
+        window.addEventListener('resize', this.resizeListener, false)
 
         this.afterInit()
     }

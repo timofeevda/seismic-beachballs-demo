@@ -2,8 +2,9 @@
     "globalDependencies": {
         "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
         "lodash": "registry:dt/lodash#3.10.0+20160720001309",
+        "moment": "registry:dt/moment#2.11.1+20160829143156",
         "node": "registry:dt/node#6.0.0+20160801161248",
-        "three": "registry:dt/three#0.0.0+20160802154944",
-        "openlayers": "registry:dt/openlayers#3.14.2+20160728101845"
+        "openlayers": "registry:dt/openlayers#3.14.2+20160728101845",
+        "three": "registry:dt/three#0.0.0+20160802154944"
     }
 }

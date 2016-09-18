@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core'
 import {Http, Response } from '@angular/http'
+
 import {Subject, BehaviorSubject, Observable} from 'rxjs'
+import * as moment from 'moment'
 
 import {USGSEvent} from '../model/usgsevent.model'
+
 
 export class USGSQueryModel {
     constructor(public starttime: string, public endtime: string, public limit: number) { }
@@ -10,25 +13,27 @@ export class USGSQueryModel {
 
 @Injectable()
 export class USGSQueryService {
-    private detailURLsCache: { [key: string]: USGSEvent } = {}    
+    private detailURLsCache: { [key: string]: USGSEvent } = {}
     private usgsEventsQuerySubject: BehaviorSubject<any[]>
-    private requestPrefix: string = `http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&producttype=moment-tensor&reviewstatus=reviewed&orderby=time&`    
+    private requestPrefix: string = `http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&producttype=moment-tensor&reviewstatus=reviewed&orderby=time&`
     emptyEvents: { [key: string]: USGSEvent } = { 'empty': new USGSEvent('', '', 0, 0, '') }
     emptySelectedEvent: USGSEvent = new USGSEvent('', '', 0, 0, '')
     usgsEvents: BehaviorSubject<{ [key: string]: USGSEvent }>
-    selectedUSGSEvent: BehaviorSubject<USGSEvent> 
+    selectedUSGSEvent: BehaviorSubject<USGSEvent>
     pickedUSGSEvent: BehaviorSubject<USGSEvent>
     queryParameters: BehaviorSubject<USGSQueryModel>
+    dateFormat = 'YYYY-MM-DD'
 
     constructor(private http: Http) {
-        this.queryParameters = new BehaviorSubject(new USGSQueryModel("2010-01-01", "2014-01-02", 50))
+
+        this.queryParameters = new BehaviorSubject(new USGSQueryModel(moment().subtract(1, 'year').format(this.dateFormat), moment().format(this.dateFormat), 50))
         this.selectedUSGSEvent = new BehaviorSubject(this.emptySelectedEvent)
         this.pickedUSGSEvent = new BehaviorSubject(this.emptySelectedEvent)
-        
+
         this.usgsEvents = new BehaviorSubject(this.emptyEvents)
-        
+
         this.usgsEventsQuerySubject = new BehaviorSubject([])
-        
+
         this.usgsEventsQuerySubject
             .map(this.toUSGSEvents).subscribe(usgsEvents => this.usgsEvents.next(usgsEvents))
 

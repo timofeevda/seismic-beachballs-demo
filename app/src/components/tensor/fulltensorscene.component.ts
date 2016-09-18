@@ -21,6 +21,11 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
         super(momentTensorService)
     }
 
+    ngOnDestroy() {
+        super.ngOnDestroy()
+        this.controls.dispose()
+    }
+
     animate() {
         requestAnimationFrame(() => this.animate())
         this.controls.update()
