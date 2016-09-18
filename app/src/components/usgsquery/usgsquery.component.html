@@ -1,0 +1,31 @@
+<div class="ui form">
+    <div class="ui bottom warning message" style="display:block;">
+        Unfortunately USGS service doesn't provide data over secure HTTPS. Go to <a href="http://timofeevda.github.io" target="_blank">http://timofeevda.github.io</a> if you need this functionality
+    </div>
+    <div class="five fields">
+        <div class="field mini">
+            <label>Start time</label>
+            <input type="text" [(ngModel)]="queryModel.starttime">
+        </div>
+        <div class="field mini">
+            <label>End time</label>
+            <input type="text" [(ngModel)]="queryModel.endtime">
+        </div>
+        <div class="field mini">
+            <label>Limit</label>
+            <input type="text" [(ngModel)]="queryModel.limit">
+        </div>
+        <div class="field">
+            <label>&nbsp;</label>
+            <button #searchbutton class="ui primary button" type="button" (click)="searchUSGS()">Search</button>
+        </div>
+        <div class="field">
+            <label>Images generated:</label>
+            <progressbar #progress></progressbar>
+        </div>
+    </div>
+    <div class="ui small label">
+        Data from U.S. Geological Survey (<a href="http://earthquake.usgs.gov/fdsnws/event/1/" target="_blank">API link</a>)
+    </div>
+    <div class="ui left pointing red basic label" *ngIf="error">{{errorText}}</div>
+</div>
