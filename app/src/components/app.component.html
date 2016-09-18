@@ -1,16 +1,9 @@
 <div class="ui padded grid">
-    <div class="five wide column" style="overflow:auto, max-height:500px">
-        <div class="ui centered grid">
-            <div class="center aligned column">
-                <div class="ui compact menu">
-                    <a class="active item" href="https://github.com/timofeevda/seismic-beachballs-demo" target="_blank">
-                        <i class="alternate github icon"></i> View on GitHub
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="ui hidden divider"></div>
+    <div class="five wide column" style="overflow:auto, max-height:500px">        
         <segment [header]="'Entries in r-t-p (up-south-east) basis'" [collapsed]='false' [withhelp]='true' [helpid]="'spherical-help'">
+            <a class="ui blue ribbon label" href="https://github.com/timofeevda/seismic-beachballs-demo" target="_blank">
+                <i class="alternate github icon"></i> View on GitHub
+            </a>
             <tensor [isCartesian]="flase"></tensor>
         </segment>
         <div class="ui hidden divider"></div>
@@ -22,12 +15,15 @@
     </div>
     <div class="eleven wide column">
         <div class="row">
-            <segment [header]="'Moment Tensor'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'beachball-help'">
+            <segment *ngIf="!usgsView.isUSGSView" [header]="'Moment Tensor'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'beachball-help'">
                 <fulltensorscene></fulltensorscene>
             </segment>
+            <segment *ngIf="usgsView.isUSGSView" [header]="'Events with computed moment tensor'" [collapsable]='false' fit='true'>
+                    <map></map>
+            </segment>
         </div>
-        <div class="ui hidden divider"></div>
-        <div class="row">
+        <div class="ui hidden divider" *ngIf="!usgsView.isUSGSView"></div>
+        <div class="row" *ngIf="!usgsView.isUSGSView">
             <div class="ui grid">
                 <div class="four wide column">
                     <segment [header]="'Equal Area Net Projection'" [collapsable]='false' [fit]='true'>
@@ -45,8 +41,8 @@
                     </segment>
                 </div>
                 <div class="four wide column">
-                    <segment [header]="'Closest Double Couple'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'double-couple-help'">
-                        <doublecouplescene [height]='122'></doublecouplescene>
+                    <segment [header]="'Closest Double Couple'" [collapsable]='false' fit='true'>
+                        <threedoublecouplescene [height]='122'></threedoublecouplescene>
                     </segment>
                 </div>
             </div>
@@ -60,12 +56,7 @@
 </helpopup>
 
 <helpopup [id]="'sdr-help'" [header]="'Strike / Dip / Rake (Slip)'">
-    Strike, dip, and rake are used to describe earthquake Focal Mechanisms. These values are computed base on Mmment tensor entries in r-t-p (up-south-east) basis
-</helpopup>
-
-<helpopup [id]="'double-couple-help'" [header]="'Closest Double Couple'">
-    Closest Double Couple view created by using JavaScript version of patch_meca.m file in Mirone source code (
-    <a href="http://w3.ualg.pt/~jluis/mirone/" target="_blank">http://w3.ualg.pt/~jluis/mirone/</a>) - a MATLAB-based framework
+    Strike, dip, and rake are used to describe earthquake Focal Mechanisms. These values are computed based on moment tensor entries in r-t-p (up-south-east) basis
 </helpopup>
 
 <helpopup [id]="'beachball-help'" [header]="'3D moment tensor'">
