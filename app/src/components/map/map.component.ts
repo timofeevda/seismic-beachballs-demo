@@ -69,9 +69,7 @@ export class MapComponent {
             this.searching = !!usgsEvents['empty']
             if (!this.searching) {
                 Object.keys(usgsEvents).map(key => usgsEvents[key]).forEach(event => {
-                    if (!event.fetched) {
-                        this.addLoadingOverlay(event.id, event.longitude, event.latitude)
-                    } else {
+                    if (event.fetched) {
                         this.addEventFeature(event)
                     }
                 })

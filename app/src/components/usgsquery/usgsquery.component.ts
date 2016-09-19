@@ -8,7 +8,7 @@ import {USGSEvent} from '../../model/usgsevent.model'
 import {ProgressComponent} from '../progress/progress.component'
 
 @Component({
-    template: require('./usgsquery.component.html'),
+    templateUrl: 'app/src/components/usgsquery/usgsquery.component.html',
     selector: 'usgsquery',
     directives: [ProgressComponent]
 })
