@@ -5,12 +5,10 @@ import * as ol from 'openlayers'
 
 import {USGSEvent} from '../../model/usgsevent.model'
 import {USGSQueryService} from '../../services/usgsquery.service'
-import {ScientificNotationPipe} from '../../pipes/scientificnotation.pipe'
 
 @Component({
-    template: require('./featurepopup.component.html'),
     selector: 'featurepopup',
-    pipes: [ScientificNotationPipe]
+    template: require('./featurepopup.component.html'),
 })
 export class FeaturePopupComponent {
     @ViewChild('popup') popup: ElementRef

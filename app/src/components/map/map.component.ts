@@ -5,7 +5,6 @@ import * as ol from 'openlayers'
 
 import {CartesianMomentTensor, SphericalMomentTensor} from 'seismic-beachballs'
 import {USGSQueryService} from '../../services/usgsquery.service'
-import {USGSQueryComponent} from '../usgsquery/usgsquery.component'
 import {BeachBallCanvasRendererService} from '../../services/beachballrenderer.service'
 import {MomentTensorService} from '../../services/momenttensor.service'
 import {USGSEvent} from '../../model/usgsevent.model'
@@ -14,7 +13,6 @@ import {FeaturePopupComponent} from './featurepopup.component'
 @Component({
     template: require('./map.component.html'),
     selector: 'map',
-    directives: [USGSQueryComponent, FeaturePopupComponent]
 })
 export class MapComponent {
     @ViewChild('featurepopup') popup: FeaturePopupComponent

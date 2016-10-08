@@ -2,12 +2,10 @@ import {Component, Input} from '@angular/core'
 
 import {MomentTensor} from '../../model/momenttensor.model'
 import {MomentTensorService, USGSView} from '../../services/momenttensor.service'
-import {SpinnerComponent} from '../spinner/spinner.component'
 
 @Component({
     template: require('./tensor.component.html'),
-    selector: 'tensor',
-    directives: [SpinnerComponent]
+    selector: 'tensor'
 })
 export class TensorComponent {
     @Input() isCartesian: boolean

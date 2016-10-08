@@ -2,14 +2,12 @@ import {Component, ViewChild} from '@angular/core'
 
 import {MomentTensor} from '../../model/momenttensor.model'
 import {MomentTensorService} from '../../services/momenttensor.service'
-import {CheckboxComponent} from '../checkbox/checkbox.component'
 import {RadioComponent} from '../radio/radio.component'
 import {SegmentComponent} from '../segment/segment.component'
 
 @Component({
     template: require('./tensorview.component.html'),
-    selector: 'tensorview',
-    directives: [CheckboxComponent, RadioComponent, SegmentComponent]
+    selector: 'tensorview'
 })
 export class TensorViewComponent {
     @ViewChild("fullsphere") fullSphere: RadioComponent

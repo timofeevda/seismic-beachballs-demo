@@ -6,7 +6,6 @@ import {MomentTensorService} from '../../services/momenttensor.service'
 @Component({
     template: require('./sdr.component.html'),
     selector: 'sdr',
-    directives: []
 })
 export class SdrComponent {
     momentTensor: MomentTensor

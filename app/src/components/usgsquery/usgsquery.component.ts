@@ -9,8 +9,7 @@ import {ProgressComponent} from '../progress/progress.component'
 
 @Component({
     templateUrl: 'app/src/components/usgsquery/usgsquery.component.html',
-    selector: 'usgsquery',
-    directives: [ProgressComponent]
+    selector: 'usgsquery'
 })
 export class USGSQueryComponent {
     @ViewChild('progress') progress: ProgressComponent
