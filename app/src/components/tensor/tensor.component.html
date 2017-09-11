@@ -1,5 +1,28 @@
 <div class="ui form">
-    <div class="ui three column grid">
+    <div class="ui one column centered grid" style="padding-top:1em;">
+        <div class="left aligned column">
+            <div class="row">
+                <checkbox [label]="'Use SDR'" [checked]="momentTensor.momentTensorView.useSDR" (onChecked)="toggleUseSDR($event)"></checkbox>
+            </div>
+        </div>
+    </div>
+    <div class="ui three column grid" *ngIf="momentTensor.momentTensorView.useSDR">
+        <div class="row">
+            <div class="column tensor">
+                <label>Strike: </label>
+                <spinner [value]="momentTensor.strike" (valueChange)="updateStrike($event)" [step]="1"></spinner>
+            </div>
+            <div class="column tensor">
+                <label>Dip: </label>
+                <spinner [value]="momentTensor.dip" (valueChange)="updateDip($event)" [step]="1"></spinner>
+            </div>
+            <div class="column tensor">
+                <label>Rake: </label>
+                <spinner [value]="momentTensor.slip" (valueChange)="updateRake($event)" [step]="1"></spinner>
+            </div>
+        </div>
+    </div>
+    <div class="ui three column grid" *ngIf="!momentTensor.momentTensorView.useSDR">
         <div class="row">
             <div class="column tensor">
                 <label>Mtt</label>

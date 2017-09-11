@@ -60,8 +60,17 @@ export class FullTensorSceneComponent extends AbstractSceneComponent {
         let originalPolygons = this.polygonizedMomentTensor.polygons.map(polygon =>
             ({ vertices: polygon.vertices.map(point => point.map(v => v)), compressional: polygon.compressional }))
 
-        let polygons = this.polygonizedMomentTensor.momentTensor.momentTensorView.lowerHemisphere ?
-            beachballs.rawLowerHemisphere(originalPolygons) : originalPolygons
+        let polygons = originalPolygons
+        let lowerSphere = this.polygonizedMomentTensor.momentTensor.momentTensorView.lowerHemisphere
+        let upperSphere = this.polygonizedMomentTensor.momentTensor.momentTensorView.upperHemisphere
+
+        if (lowerSphere && upperSphere) {
+            polygons = originalPolygons
+        } else if (lowerSphere) {
+            polygons = beachballs.rawLowerHemisphere(originalPolygons)
+        } else if (upperSphere) {
+            polygons = beachballs.rawUpperHemisphere(originalPolygons)
+        }
 
         this.fillGeometry(geometry, polygons)
 

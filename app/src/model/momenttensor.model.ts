@@ -8,7 +8,9 @@ class MomentTensorView {
     auxPlane: boolean
     horPlane: boolean
     lowerHemisphere: boolean
+    upperHemisphere: boolean
     showMesh: boolean
+    useSDR: boolean
 }
 
 class MomentTensor implements beachballs.CartesianMomentTensor, beachballs.SphericalMomentTensor {

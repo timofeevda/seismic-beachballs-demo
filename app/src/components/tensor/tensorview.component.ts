@@ -12,8 +12,8 @@ import {SegmentComponent} from '../segment/segment.component'
     directives: [CheckboxComponent, RadioComponent, SegmentComponent]
 })
 export class TensorViewComponent {
-    @ViewChild("fullsphere") fullSphere: RadioComponent
-    @ViewChild("lowerhemisphere") lowerHemisphere: RadioComponent
+    @ViewChild("upperhemisphere") fullSphere: CheckboxComponent
+    @ViewChild("lowerhemisphere") lowerHemisphere: CheckboxComponent
     momentTensor: MomentTensor
 
     constructor(private momentTensorService: MomentTensorService) {
@@ -48,11 +48,12 @@ export class TensorViewComponent {
         this.momentTensorService.toggleMesh(checked)
     }
 
-    toggleLowerHemisphere() {
-        let lowerHemisphere = !this.momentTensorService.currentTensor.momentTensorView.lowerHemisphere
-        this.momentTensorService.toggleLowerHemisphere()
-        this.fullSphere.setCheckedView(!lowerHemisphere)
-        this.lowerHemisphere.setCheckedView(lowerHemisphere)
+    toggleLowerHemisphere(checked) {
+        this.momentTensorService.toggleLowerHemisphere(checked)
+    }
+
+    toggleUpperHemisphere(checked) {
+        this.momentTensorService.toggleUpperHemisphere(checked)
     }
 
 }

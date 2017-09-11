@@ -41,7 +41,7 @@
                     </segment>
                 </div>
                 <div class="four wide column">
-                    <segment [header]="'Closest Double Couple'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'double-couple-help'">
+                    <segment [header]="'Closest Double Couple'" [collapsable]='false' fit='true'>
                         <threedoublecouplescene [height]='122'></threedoublecouplescene>
                     </segment>
                 </div>
@@ -57,11 +57,6 @@
 
 <helpopup [id]="'sdr-help'" [header]="'Strike / Dip / Rake (Slip)'">
     Strike, dip, and rake are used to describe earthquake Focal Mechanisms. These values are computed based on moment tensor entries in r-t-p (up-south-east) basis
-</helpopup>
-
-<helpopup [id]="'double-couple-help'" [header]="'Closest Double Couple'">
-    Closest Double Couple view created by using JavaScript version of patch_meca.m file in Mirone source code (
-    <a href="http://w3.ualg.pt/~jluis/mirone/" target="_blank">http://w3.ualg.pt/~jluis/mirone/</a>) - a MATLAB-based framework
 </helpopup>
 
 <helpopup [id]="'beachball-help'" [header]="'3D moment tensor'">

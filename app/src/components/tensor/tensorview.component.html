@@ -42,17 +42,16 @@
     <div class="ui two column grid">
         <div class="row">
             <div class="column">
-                <radio #fullsphere [label]="'Full Sphere'" [checked]="!momentTensor.momentTensorView.lowerHemisphere" (onChecked)="toggleLowerHemisphere()"></radio>
+                <checkbox #upperhemisphere [label]="'Upper Hemisphere'" [checked]="momentTensor.momentTensorView.upperHemisphere" (onChecked)="toggleUpperHemisphere($event)"></checkbox>
             </div>
             <div class="column">
-                <radio #lowerhemisphere [label]="'Lower Hemisphere'" [checked]="momentTensor.momentTensorView.lowerHemisphere" (onChecked)="toggleLowerHemisphere()"></radio>
+                <checkbox #lowerhemisphere [label]="'Lower Hemisphere'" [checked]="momentTensor.momentTensorView.lowerHemisphere" (onChecked)="toggleLowerHemisphere($event)"></checkbox>
             </div>
         </div>
-        <div class="row">
+        <div class="row">            
             <div class="column">
                 <checkbox [label]="'Show mesh'" [checked]="momentTensor.momentTensorView.showMesh" (onChecked)="toggleMeshView($event)"></checkbox>
             </div>
-            <div class="column"></div>
         </div>
     </div>
 </segment>
