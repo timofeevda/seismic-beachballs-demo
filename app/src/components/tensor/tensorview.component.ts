@@ -4,6 +4,7 @@ import {MomentTensor} from '../../model/momenttensor.model'
 import {MomentTensorService} from '../../services/momenttensor.service'
 import {RadioComponent} from '../radio/radio.component'
 import {SegmentComponent} from '../segment/segment.component'
+import {CheckboxComponent} from '../checkbox/checkbox.component'
 
 @Component({
     template: require('./tensorview.component.html'),
