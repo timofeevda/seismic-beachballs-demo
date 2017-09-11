@@ -144,8 +144,13 @@ export class MomentTensorService {
     }
 
     toggleUseSDR(checked: boolean) {
+        let previousState = this.currentTensor.momentTensorView.useSDR
         this.currentTensor.momentTensorView.useSDR = checked
-        this.fireModifiedTensor()
+        if (!previousState && checked) {
+            this.updateTensorForSDR()
+        } else if (previousState && !checked) {
+            this.fireModifiedTensor()
+        }
     }
 
     fireModifiedTensor() {
