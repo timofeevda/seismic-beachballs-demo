@@ -2,10 +2,13 @@ import {Component, Input} from '@angular/core'
 
 import {MomentTensor} from '../../model/momenttensor.model'
 import {MomentTensorService, USGSView} from '../../services/momenttensor.service'
+import {SpinnerComponent} from '../spinner/spinner.component'
+import {CheckboxComponent} from '../checkbox/checkbox.component'
 
 @Component({
     template: require('./tensor.component.html'),
-    selector: 'tensor'
+    selector: 'tensor',
+    directives: [SpinnerComponent, CheckboxComponent]
 })
 export class TensorComponent {
     @Input() isCartesian: boolean
@@ -56,4 +59,22 @@ export class TensorComponent {
     updateMyy(val: number) {
         this.momentTensorService.updateYYPP(val)
     }
+
+    
+    updateStrike(value: number) {		
+        this.momentTensorService.updateStrike(value)		
+    }		
+        		
+    updateRake(value: number) {		
+        this.momentTensorService.updateRake(value)		
+    }		
+
+    updateDip(value: number) {		
+        this.momentTensorService.updateDip(value)		
+    }
+
+    toggleUseSDR(checked) {
+        this.momentTensorService.toggleUseSDR(checked)
+    }
+
 }

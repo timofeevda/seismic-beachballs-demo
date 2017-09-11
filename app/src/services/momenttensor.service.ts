@@ -21,7 +21,7 @@ export class MomentTensorService {
 
     constructor(private usgsQueryService: USGSQueryService) {
         let sphericalTensor = { Mtt: 99, Mtp: 4, Mrt: 5.5, Mpp: -10, Mrp: 7, Mrr: -10 }
-        let momentTensorView: MomentTensorView = { pAxis: true, tAxis: true, bAxis: true, faultPlane: true, auxPlane: true, horPlane: false, lowerHemisphere: false, showMesh: false }
+        let momentTensorView: MomentTensorView = { pAxis: true, tAxis: true, bAxis: true, faultPlane: true, auxPlane: true, horPlane: false, lowerHemisphere: true, upperHemisphere: true, showMesh: false, useSDR: false }
         this.currentTensor = new MomentTensor(momentTensorView, undefined, sphericalTensor)
         this.polygonizedMomentTensorSubject = new BehaviorSubject<PolygonizedMomentTensor>(this.createPolygonizedMomentTensor())
         this.usgsViewSubject = new BehaviorSubject(new USGSView())
@@ -124,8 +124,13 @@ export class MomentTensorService {
         this.fireModifiedTensor()
     }
 
-    toggleLowerHemisphere() {
-        this.currentTensor.momentTensorView.lowerHemisphere = !this.currentTensor.momentTensorView.lowerHemisphere
+    toggleLowerHemisphere(checked: boolean) {
+        this.currentTensor.momentTensorView.lowerHemisphere = checked
+        this.fireModifiedTensor()
+    }
+
+    toggleUpperHemisphere(checked: boolean) {
+        this.currentTensor.momentTensorView.upperHemisphere = checked
         this.fireModifiedTensor()
     }
 
@@ -138,8 +143,42 @@ export class MomentTensorService {
         this.usgsViewSubject.next(new USGSView(!this.usgsViewSubject.getValue().isUSGSView))
     }
 
+    toggleUseSDR(checked: boolean) {
+        this.currentTensor.momentTensorView.useSDR = checked
+        this.fireModifiedTensor()
+    }
+
     fireModifiedTensor() {
         this.currentTensor = new MomentTensor(this.currentTensor.momentTensorView, this.currentTensor.cartesian, this.currentTensor.spherical)
         this.polygonizedMomentTensorSubject.next(this.createPolygonizedMomentTensor())
     }
+
+    updateStrike(strike: number) {		
+        this.currentTensor.strike = strike		
+        this.updateTensorForSDR()		
+    }		
+    
+    updateDip(dip: number) {		
+        this.currentTensor.dip = dip		
+        this.updateTensorForSDR()		
+    }		
+
+    updateRake(rake: number) {		
+        this.currentTensor.slip = rake		
+        this.updateTensorForSDR()		
+    }
+
+    updateTensorForSDR() {		
+        let {strike, dip, slip} = this.currentTensor		
+        let spherical = beachballs.sdr2mt({ strike, dip, rake: slip })		
+        
+        this.currentTensor = new MomentTensor(this.currentTensor.momentTensorView, undefined, spherical)		
+
+        // keep original s/d/r, cause after computation they can be slightly different		
+        this.currentTensor.strike = strike
+        this.currentTensor.dip = dip
+        this.currentTensor.slip = slip
+        this.polygonizedMomentTensorSubject.next(this.createPolygonizedMomentTensor())		
+    }
+
 }

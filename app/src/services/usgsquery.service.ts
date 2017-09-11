@@ -15,7 +15,7 @@ export class USGSQueryModel {
 export class USGSQueryService {
     private detailURLsCache: { [key: string]: USGSEvent } = {}
     private usgsEventsQuerySubject: BehaviorSubject<any[]>
-    private requestPrefix: string = `http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&producttype=moment-tensor&reviewstatus=reviewed&orderby=time&`
+    private requestPrefix: string = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&producttype=moment-tensor&reviewstatus=reviewed&orderby=time&`
     emptyEvents: { [key: string]: USGSEvent } = { 'empty': new USGSEvent('', '', 0, 0, '') }
     emptySelectedEvent: USGSEvent = new USGSEvent('', '', 0, 0, '')
     usgsEvents: BehaviorSubject<{ [key: string]: USGSEvent }>
