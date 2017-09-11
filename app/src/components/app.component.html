@@ -18,7 +18,7 @@
             <segment *ngIf="!usgsView.isUSGSView" [header]="'Moment Tensor'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'beachball-help'">
                 <fulltensorscene></fulltensorscene>
             </segment>
-            <segment *ngIf="usgsView.isUSGSView" [header]="'Events with computed moment tensor'" [collapsable]='false' fit='true'>
+            <segment *ngIf="usgsView.isUSGSView" [header]="'Events with computed moment tensor'" [collapsable]='false' fit='true' [withhelp]='true' [helpid]="'beachball-help'">
                     <map></map>
             </segment>
         </div>
